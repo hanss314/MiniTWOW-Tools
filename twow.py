@@ -1,6 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-import random, argparse
-import re
+import random, argparse, re
 
 
 def main():
@@ -10,11 +9,10 @@ def main():
 	args = parser.parse_args()
 	its=int(args.iterations)
 	
+	keylist = open('./resources/words.txt','r').read().split('\n')
 	submissions = open(args.input,'r').read().split('\n')
-	keys = random.sample(
-		open('./resources/words.txt','r').read().split('\n'),
-		its)
-	arial = ImageFont.truetype('arial.ttf',30)
+	keyorder = random.sample(len(keylist),its)
+	arial = ImageFont.truetype('./resources/arial.ttf',30)
 	
 	for iteration in range(its):
 
@@ -38,7 +36,7 @@ def main():
 				drawer.text((distance,71*i+45), str(wordCount), font=arial, fill=(30,30,255))
 			
 			
-		word = keys[iteration].upper()
+		word = keylist[keyorder[iteration]].upper()
 		w = drawer.textsize(word,arial)[0]
 		drawer.text((1360-int(w/2), 30), word, font=arial, fill="black")
 		
