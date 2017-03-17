@@ -16,6 +16,7 @@ def main():
 	submissionCount = len(submissions)
 	voteList = []
 	voteNumber = 0
+	screenDict = {}
 	
 	for randomListNumber in range(int(10*its/len(submissions))+1):
 		randomSubmissionOrder = list(range(submissionCount))
@@ -63,9 +64,10 @@ def main():
 		word = keylist[keyorder[iteration]].upper()
 		w = drawer.textsize(word,arial)[0]
 		drawer.text((1360-int(w/2), 30), word, font=arial, fill="black")
+		screenDict[word]=list(existingEntries)
 		
 		base.save('./screens/'+str(iteration)+'.png')
-	
+	open(args.input+'dict.py','w').write(str(screenDict))
 	
 	
 if __name__ == '__main__':
