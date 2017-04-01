@@ -31,4 +31,4 @@ Use flag `-t` to specify how many twowers get the golden background/prize
 
 Use flag `-e` to specify which percentage of twowers get eliminated
 
-Alternatively, if you want to specify how many twowers get eliminated use `elIsNum 1`
+Alternatively, if you want to specify how many twowers get eliminated use `-elIsNum 1`
