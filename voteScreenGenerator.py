@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-import random, argparse, re
+import random, argparse, re, os, textwrap
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
 	keylist = open('./resources/words.txt','r').read().split('\n')
 	keyorder = random.sample(range(len(keylist)),its)
 	
-	submissions = open(args.input,'r').read().split('\n')
+	submissions = open('./'+args.input+'/responses.txt','r').read().split('\n')
 	submissionCount = len(submissions)
 	voteList = []
 	voteNumber = 0
@@ -26,6 +26,7 @@ def main():
 	print(str(voteList))
 	
 	arial = ImageFont.truetype('./resources/arial.ttf',30)
+	os.makedirs('./'+args.input+'/voteScreens', exist_ok=True)
 	
 	for iteration in range(its):
 
@@ -42,9 +43,13 @@ def main():
 				voteList[int(voteNumber/submissionCount)].append(submissionNumber)
 				submissionNumber = voteList[int(voteNumber/submissionCount)][voteNumber%submissionCount]
 				
-			phrase = submissions[submissionNumber]
-		
-			drawer.text((100,71*i+45), phrase, font=arial, fill=(0,0,0))
+			lines = textwrap.wrap(submissions[submissionNumber],width=85)
+			phrase = ''
+			for line in lines:
+				phrase += (line+'\n')
+			
+			
+			drawer.text((100,71*i+78-drawer.textsize(phrase,arial)[1]/2), phrase, font=arial, fill=(0,0,0))
 			distance = 130+drawer.textsize(phrase,arial)[0]
 			indivWords = re.sub('/[^a-zA-Z0-9 ]/','',phrase).split(' ')
 			wordCount = 0
@@ -66,8 +71,8 @@ def main():
 		drawer.text((1360-int(w/2), 30), word, font=arial, fill="black")
 		screenDict[word]=list(existingEntries)
 		
-		base.save('./screens/'+str(iteration)+'.png')
-	open(args.input+'dict.py','w').write(str(screenDict))
+		base.save('./'+args.input+'/voteScreens/'+str(iteration)+'.png')
+	open('./'+args.input+'/dict.txt','w').write(str(screenDict))
 	
 	
 if __name__ == '__main__':
