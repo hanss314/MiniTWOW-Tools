@@ -6,7 +6,6 @@ def main():
 	parser.add_argument('input')
 	parser.add_argument("-e", "--perc_elim", nargs='?', const=5, default=5)
 	parser.add_argument("-t", "--num_gold", nargs='?', const=5, default=5)
-	parser.add_argument('-elIsNum','--elim_is_number', nargs='?', const=0, default=0)
 	args = parser.parse_args()
 	
 	keys = ast.literal_eval(open('./'+args.input+'/dict.txt','r').read())
@@ -21,8 +20,8 @@ def main():
 	
 	topNumber = int(args.num_gold)
 	elimNumber = 0
-	if int(args.elim_is_number) == 1:
-		elimNumber = int(args.perc_elim)
+	if int(args.perc_elim) < 0:
+		elimNumber = -int(args.perc_elim)
 	else:
 		elimNumber = round(int(args.perc_elim)*len(indivTwowers)/100)
 	

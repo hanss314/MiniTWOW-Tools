@@ -3,7 +3,9 @@ Some python scripts for minitwow voting and response management
 
 ## Usage
 
-Make a folder with the name of the TWOW episode
+You will need to install Python 3 and Pillow
+
+Make a folder with the name of the TWOW episode, for this example, we will name it "exampleTwow"
 
 You will need a file with the prompt in it named "prompt.txt"
 
@@ -15,11 +17,11 @@ Optionally, put each of the Twowers' booksonas into the booksonas folder
 
 To generate voting slides, go into the command line and type
 
-`python votingScreenGenerator.py [response folder]`
+`python votingScreenGenerator.py exampleTwow`
 
 By default, it will generate 10 slides, if you want more, use `-i`. eg
 
-`python votingScreenGenerator.py [response folder] -i 100`
+`python votingScreenGenerator.py exampleTwow -i 100`
 
 creates 100 random voting slides.
 
@@ -31,4 +33,4 @@ Use flag `-t` to specify how many twowers get the golden background/prize
 
 Use flag `-e` to specify which percentage of twowers get eliminated
 
-Alternatively, if you want to specify how many twowers get eliminated use `-elIsNum 1`
+Alternatively, if you want to specify how many twowers get eliminated use use a negative number
