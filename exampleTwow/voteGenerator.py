@@ -1,10 +1,10 @@
-import ast, argparse, random
+import json, argparse, random
 
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("-v", "--votes", nargs='?', const=10, default=10)
 	args = parser.parse_args()
-	keys = list(ast.literal_eval(open('./dict.txt','r').read()).keys())
+	keys = list(json.load(open('./dict.json','r')).keys())
 	writer = open('votes.txt','w')
 	options = ['a','b','c','d','e','f','g','h','i','j']	
 	

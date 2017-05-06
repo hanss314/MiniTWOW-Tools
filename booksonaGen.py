@@ -21,9 +21,9 @@ def make_book(name,dir):
 	if len(name)<2:
 		name += name
 		
-	left = Image.open('./bookTemplate/left.png').convert('RGBA')
-	right = Image.open('./bookTemplate/right.png').convert('RGBA')
-	face = Image.open('./bookTemplate/face.png').convert('RGBA')
+	left = Image.open('./resources/left.png').convert('RGBA')
+	right = Image.open('./resources/right.png').convert('RGBA')
+	face = Image.open('./resources/face.png').convert('RGBA')
 	
 	left = ImageChops.multiply(left, Image.new('HSV', left.size, makeLetterTint(name[0])).convert('RGBA'))
 	right = ImageChops.multiply(right, Image.new('HSV', right.size, makeLetterTint(name[1])).convert('RGBA'))

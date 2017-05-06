@@ -1,25 +1,12 @@
 import ast, argparse, statistics, textwrap, csv, json
 from PIL import Image, ImageDraw, ImageFont
 
-#data
-responses = []
-twowers = []
-indiv_twowers = []
-votes = []
-scores= []
-
-top_number = 0
-elim_number = 0
-prompt = ''
 
 #fonts
 arial = ImageFont.truetype('./resources/arial.ttf',20)
 bigArial =  ImageFont.truetype('./resources/arial.ttf',30)
 smallArial = ImageFont.truetype('./resources/arial.ttf',13)
 
-#base image
-base = Image.new('RGBA',(1368,1368),color=(255,255,255))
-drawer = ImageDraw.Draw(base)
 
 
 def parse_args():
@@ -28,54 +15,61 @@ def parse_args():
 	parser.add_argument("-e", "--perc_elim", nargs='?', const=5, default=5)
 	parser.add_argument("-t", "--num_gold", nargs='?', const=5, default=5)
 	args = parser.parse_args()
-	dir = args.input
+	path = args.input
 	
-	prompt = open('./{}/prompt.txt'.format(dir),'r').read().split('\n')[0]
+	prompt = open('./{}/prompt.txt'.format(path),'r').read().split('\n')[0]
 	
-	with open('./{}/responses.csv'.format(dir),'rb') as csvfile:#read responses
+	twowers = []
+	responses = []
+	
+	with open('./{}/responses.csv'.format(path),'r') as csvfile:#read responses
 		reader = csv.reader(csvfile)
 		for row in reader:
 			twowers.append(row[0])
 			responses.append(row[1])
 			
 	scores = [[response,[]]for response in responses]		
-	json.load(open('./{}/votes.json'.format(dir),'r'))#I'll make a script to convert this from whatever format
+	votes = json.load(open('./{}/votes.json'.format(path),'r'))
 	
-	indivTwowers = list(set(twowers))#data about the data (metadata?)
-	twowerCount = len(indivTwowers)
+	indiv_twowers = list(set(twowers))#data about the data (metadata?)
+	twower_count = len(indiv_twowers)
 	
 	top_number = int(args.num_gold) #chart coloring ranges
+	elim_number=0
 	if int(args.perc_elim) < 0:
 		elim_number = -int(args.perc_elim)
 	else:
-		elim_number = round(int(args.perc_elim)*len(indivTwowers)/100)
-		
+		elim_number = round(int(args.perc_elim)*len(indiv_twowers)/100)
+	
+	return (path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number)
 		
 def wrap_text(text,chars):
 	lines = textwrap.wrap(text,chars)
 	new_text='\n'.join(lines)
 	return new_text
 	
-def draw_header():
+def draw_header(prompt, base, drawer, responses):
 	prompt = wrap_text(prompt,100)
-	headerHeight = drawer.textsize(prompt,bigArial)[1]+35
-	base = Image.new('RGBA',(1368,headerHeight+int(67/2*len(responses))),color=(255,255,255,255))
+	header_height = drawer.textsize(prompt,bigArial)[1]+35
+	base = Image.new('RGBA',(1368,header_height+int(67/2*len(responses))),color=(255,255,255,255))
 	drawer = ImageDraw.Draw(base)
+	base.paste(Image.open('./resources/header.png'),(0,header_height-40))
 	drawer.text((15,0),prompt,font=bigArial, fill=(0,0,0,255))
-	base.paste(Image.open('./resources/header.png'),(0,headerHeight-40))
+	
+	return (prompt, base, drawer, header_height)
 
-def process_votes():	
+def process_votes(votes, scores, twowers):	
 	for vote in votes:#maps votes to responses
 		try:
 			percentage = 100
-			for resp_num in vote[1]:
+			for resp_num in vote:
 				scores[resp_num][1].append(percentage)
 				percentage -= 11
 		except Exception:
 			pass
 
-	for scoredata in scores:
-		try:#calculate stats, dm if you want more
+	for scoredata in scores:#calculate stats, dm if you want more
+		try:
 			scoredata.append(statistics.mean(scoredata[1]))	
 		except Exception:
 			print('{} was not voted for'.format(scoredata[0]))
@@ -91,8 +85,9 @@ def process_votes():
 		scoredata[0],scoredata[1]=scoredata[1],scoredata[0]#rearranges list in order on chart
 		
 	mergeSort(scores)#sorts from best to worst. Mergesort for best worst case
+	return scores
 	
-def draw_rankings():#this one is a bit of a mess
+def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,header_height,indiv_twowers):#this one is a bit of a mess
 	backgroundCol=0
 	addBackground=0
 	ranking=1
@@ -100,30 +95,30 @@ def draw_rankings():#this one is a bit of a mess
 	for i in range(len(scores)):	
 		twower, response, mean, standev, voteCount = scores[i][0], scores[i][1], scores[i][2], scores[i][3], scores[i][4]
 		
-		if ranking == (topNumber+1):#change background depending on ranking
+		if ranking == (top_number+1):#change background depending on ranking
 			backgroundCol = 1
 			addBackground = 0
-		elif ranking == (twowerCount-elimNumber+1) and twower in indivTwowers:
+		elif ranking == (twower_count-elim_number+1) and twower in indiv_twowers:
 			backgroundCol = 2
 			addBackground = 0
 			
 		if (addBackground % 2) ==0:#only needs extra stuff added every two twowers
 			if backgroundCol==0:
-				base.paste(Image.open('./resources/top.png'),(0,int(67/2*i)+headerHeight))
+				base.paste(Image.open('./resources/top.png'),(0,int(67/2*i)+header_height))
 			elif backgroundCol==1:
-				base.paste(Image.open('./resources/normal.png'),(0,int(67/2*i)+headerHeight))
+				base.paste(Image.open('./resources/normal.png'),(0,int(67/2*i)+header_height))
 			elif backgroundCol==2:
-				base.paste(Image.open('./resources/eliminated.png'),(0,int(67/2*i)+headerHeight))
+				base.paste(Image.open('./resources/eliminated.png'),(0,int(67/2*i)+header_height))
 		
 		try:#attempt to add booksona
 			booksona = Image.open('./booksonas/'+twower+'.png')
 			booksona.thumbnail((32,32),Image.BICUBIC)
-			base.paste(booksona,(333,int(67/2*i)+headerHeight),booksona)
+			base.paste(booksona,(333,int(67/2*i)+header_height),booksona)
 		except Exception:
 			pass
 		
-		if twower in indivTwowers:#handles multiple submissions
-			indivTwowers.remove(twower)
+		if twower in indiv_twowers:#handles multiple submissions
+			indiv_twowers.remove(twower)
 			if ranking % 10 == 1:
 				rankingString = str(ranking)+'st'
 			elif ranking % 10 == 2:
@@ -133,15 +128,15 @@ def draw_rankings():#this one is a bit of a mess
 			else:
 				rankingString = str(ranking)+'th'
 				
-			drawer.text((15,int(67/2*i+7)+headerHeight),rankingString,font=arial,fill=(0,0,0,255))
+			drawer.text((15,int(67/2*i+7)+header_height),rankingString,font=arial,fill=(0,0,0,255))
 			ranking += 1
 			
 		if drawer.textsize(twower,arial)[0] > 255: #draws twower name
-			drawer.text((320-drawer.textsize(twower,smallArial)[0],int(67/2*i+7)+headerHeight),
+			drawer.text((320-drawer.textsize(twower,smallArial)[0],int(67/2*i+7)+header_height),
 				twower,font=smallArial,fill=(0,0,0,255))
 				
 		else:
-			drawer.text((320-drawer.textsize(twower,arial)[0],int(67/2*i+7)+headerHeight),
+			drawer.text((320-drawer.textsize(twower,arial)[0],int(67/2*i+7)+header_height),
 				twower,font=arial,fill=(0,0,0,255))
 				
 		if drawer.textsize(response,arial)[0] > 618: #draws responses
@@ -150,24 +145,26 @@ def draw_rankings():#this one is a bit of a mess
 			for s in responseLines:
 				response += (s+'\n')
 				
-			drawer.text((378,int(67/2*i)+headerHeight),
+			drawer.text((378,int(67/2*i)+header_height),
 				response,font=smallArial,fill=(0,0,0,255))
 		else:
-			drawer.text((378,int(67/2*i+7)+headerHeight),
+			drawer.text((378,int(67/2*i+7)+header_height),
 				response,font=arial,fill=(0,0,0,255))
 		
 		#draws data
-		drawer.text((998,int(67/2*i+7)+headerHeight),
+		drawer.text((998,int(67/2*i+7)+header_height),
 			str(mean)[:5]+'%',font=arial,fill=(0,0,0,255))
 			
-		drawer.text((1164,int(67/2*i+7)+headerHeight),
+		drawer.text((1164,int(67/2*i+7)+header_height),
 			str(standev)[:5]+'%',font=arial,fill=(0,0,0,255))
 			
 		drawer.text((1309-drawer.textsize(str(voteCount),arial)[0]/2,
-			int(67/2*i+7)+headerHeight),str(voteCount),
+			int(67/2*i+7)+header_height),str(voteCount),
 			font=arial,fill=(0,0,0,255))
 				
 		addBackground += 1
+		
+	return base
 		
 def mergeSort(alist):
     if len(alist)>1:
@@ -201,12 +198,17 @@ def mergeSort(alist):
             k=k+1
 	
 def main():
-	parse_args()
-	draw_header()
-	process_votes()
-	draw_rankings()
+	#base image
+	base = Image.new('RGBA',(1368,1368),color=(255,255,255))
+	drawer = ImageDraw.Draw(base)
+
+	path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number = parse_args()
 	
-	base.save('./'+args.input+'/results.png')
+	prompt, base, drawer, header_height = draw_header(prompt, base, drawer, responses)
+	scores = process_votes(votes, scores, twowers)
+	draw_rankings(scores,top_number,elim_number,twower_count,base,drawer,header_height,indiv_twowers)
+	
+	base.save('./'+path+'/results.png')
 
 
 if __name__=='__main__':
