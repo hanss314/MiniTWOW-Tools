@@ -2,14 +2,33 @@
 Some python scripts for minitwow voting and response management
 
 ## Usage
+
+### Voting Slide Generator
+
 To generate voting slides, go into the command line and type
 
-`python votingScreenGenerator.py [response file]`
+`python3 votingScreenGenerator.py twowe_folder [-i amount]`
 
-Replace `[response file]` with the name of the file containing all the responses seperated by line breaks
+Replace 'response_folder' with the name of the folder the responses are in
 
-By default, it will generate 10 slides, if you want more, use `-i`. eg
+Use the '-i' flag to change the number of slides that are generated
 
-`python votingScreenGenerator.py [response file] -i 100`
+### Generating Booksonas
 
-creates 100 random voting slides.
+Run the python script and type the person's name to generate a book
+
+### Gathering votes
+
+Gather all the votes in a file called "votes.txt", then run `python3 voteConverter.py twow_folder`
+
+### Tallying votes 
+
+Usage: `python3 voteConverter.py twow_folder [-t number_of_gold] [-e percent_elim'd]`
+
+Use a negative 'percent_elim'd' to specify number to elim rather than percent
+
+You will need to put the twompt in a file called prompt.txt
+
+## Issues and suggestions
+
+Put issues and suggestions in the issues tab
