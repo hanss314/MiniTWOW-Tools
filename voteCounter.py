@@ -1,7 +1,8 @@
+#framework is here, modify as needed
 import ast, argparse, statistics, textwrap
 from PIL import Image, ImageDraw, ImageFont
 
-def main():
+def main():#this is an absolute mess
 	parser = argparse.ArgumentParser()
 	parser.add_argument('input')
 	parser.add_argument("-e", "--perc_elim", nargs='?', const=5, default=5)
@@ -20,6 +21,7 @@ def main():
 	
 	topNumber = int(args.num_gold)
 	elimNumber = 0
+	
 	if int(args.perc_elim) < 0:
 		elimNumber = -int(args.perc_elim)
 	else:
@@ -82,8 +84,6 @@ def main():
 	backgroundCol=0
 	addBackground=0
 	ranking=1
-	print(elimNumber)
-	print(twowerCount)
 	
 	for i in range(len(scores)):	
 		twower, response, mean, standev, voteCount = scores[i][0], scores[i][1], scores[i][2], scores[i][3], scores[i][4]
