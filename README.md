@@ -7,7 +7,7 @@ Some python scripts for minitwow voting and response management
 
 To generate voting slides, go into the command line and type
 
-`python3 votingScreenGenerator.py twowe_folder [-i amount]`
+`python3 votingScreenGenerator.py twow_folder [-i amount]`
 
 Replace 'response_folder' with the name of the folder the responses are in
 
