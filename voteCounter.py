@@ -181,29 +181,32 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			drawer.text((378,int(67/2*i+7)+header_height),
 				response,font=arial,fill=(0,0,0,255))
 		
-		#draws data
-		try:
-			mean_str = str(mean-boosts[twower])[:4]
-			mean_str += '(+{})'.format(boosts[twower])
-			mean_str += '%'
-			
-			
-			drawer.text((998,int(67/2*i+7)+header_height),
-				mean_str,font=arial,fill=(0,0,0,255))
-		except:
-			drawer.text((998,int(67/2*i+7)+header_height),
-				str(mean)[:5]+'%',font=arial,fill=(0,0,0,255))
-			
-		drawer.text((1164,int(67/2*i+7)+header_height),
-			str(standev)[:5]+'%',font=arial,fill=(0,0,0,255))
-			
-		drawer.text((1309-drawer.textsize(str(voteCount),arial)[0]/2,
-			int(67/2*i+7)+header_height),str(voteCount),
-			font=arial,fill=(0,0,0,255))
+		draw_stats(drawer,twower,mean,standev,boosts,voteCount,header_height,i)
+		
 				
 		addBackground += 1
 		
 	return base
+	
+def draw_stats(drawer,twower,mean,standev,boosts,voteCount,header_height,rank):
+	try:
+		mean_str = str(mean-boosts[twower])[:4]
+		mean_str += '(+{})'.format(boosts[twower])
+		mean_str += '%'
+		
+		
+		drawer.text((998,int(67/2*rank+7)+header_height),
+			mean_str,font=arial,fill=(0,0,0,255))
+	except:
+		drawer.text((998,int(67/2*rank+7)+header_height),
+			str(mean)[:5]+'%',font=arial,fill=(0,0,0,255))
+		
+	drawer.text((1164,int(67/2*rank+7)+header_height),
+		str(standev)[:5]+'%',font=arial,fill=(0,0,0,255))
+		
+	drawer.text((1309-drawer.textsize(str(voteCount),arial)[0]/2,
+		int(67/2*rank+7)+header_height),str(voteCount),
+		font=arial,fill=(0,0,0,255))
 		
 def mergeSort(alist):
     if len(alist)>1:
