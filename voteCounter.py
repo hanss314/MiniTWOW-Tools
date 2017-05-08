@@ -1,5 +1,7 @@
-import ast, argparse, statistics, textwrap, csv, json
+import ast, argparse, statistics, textwrap, csv, json, os
 from PIL import Image, ImageDraw, ImageFont
+from voteConverter import convert
+from booksonaGen import make_book
 
 
 #fonts
@@ -17,6 +19,7 @@ def parse_args():
 	args = parser.parse_args()
 	path = args.input
 	
+	convert(path)
 	prompt = open('./{}/prompt.txt'.format(path),'r').read().split('\n')[0]
 	
 	twowers = []
@@ -110,12 +113,17 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			elif backgroundCol==2:
 				base.paste(Image.open('./resources/eliminated.png'),(0,int(67/2*i)+header_height))
 		
+		if not os.path.isfile('./booksonas/'+twower+'.png'):
+			make_book(twower,'./booksonas/')
+		
 		try:#attempt to add booksona
 			booksona = Image.open('./booksonas/'+twower+'.png')
 			booksona.thumbnail((32,32),Image.BICUBIC)
 			base.paste(booksona,(333,int(67/2*i)+header_height),booksona)
-		except Exception:
+		except:
 			pass
+			
+			
 		
 		if twower in indiv_twowers:#handles multiple submissions
 			indiv_twowers.remove(twower)
@@ -198,11 +206,12 @@ def mergeSort(alist):
             k=k+1
 	
 def main():
-	#base image
+	path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number = parse_args()
+	
+	
 	base = Image.new('RGBA',(1368,1368),color=(255,255,255))
 	drawer = ImageDraw.Draw(base)
 
-	path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number = parse_args()
 	
 	prompt, base, drawer, header_height = draw_header(prompt, base, drawer, responses)
 	scores = process_votes(votes, scores, twowers)

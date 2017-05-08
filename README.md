@@ -17,6 +17,8 @@ Use the '-i' flag to change the number of slides that are generated
 
 Run the python script and type the person's name to generate a book
 
+Optionally, run it with a text file containing names as an argument and it will generate booksonas for all the names in that text file
+
 ### Gathering votes
 
 Gather all the votes in a file called "votes.txt", then run `python3 voteConverter.py twow_folder`

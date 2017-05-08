@@ -1,4 +1,5 @@
 from PIL import Image, ImageChops
+import sys
 
 def makeLetterTint(char): 
 	char = char.upper()
@@ -36,7 +37,16 @@ def make_book(name,dir):
 
 	
 if __name__ =='__main__':
-	while True:
-		make_book(input(),'./booksonas')
+	try:
+		file = sys.argv[1]
+		names = open(file,'r').read().split('\n')
+		for name in names:
+			if not name == '':
+				make_book(name,'./booksonas')
+	except:
+		while True:
+			make_book(input(),'./booksonas')
+			
+	
 	
 		
