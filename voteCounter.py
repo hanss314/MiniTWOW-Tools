@@ -184,7 +184,7 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 		#draws data
 		try:
 			mean_str = str(mean-boosts[twower])[:4]
-			mean_str += '+({})'.format(boosts[twower])
+			mean_str += '(+{})'.format(boosts[twower])
 			mean_str += '%'
 			
 			

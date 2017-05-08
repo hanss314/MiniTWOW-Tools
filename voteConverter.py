@@ -21,10 +21,8 @@ def convert(path):
 		order = []
 		
 		for c in vote[1].upper():
-			print(c)
 			indexes.append(ord(c)-65)
 
-		print(indexes)
 		for index in indexes:
 			order.append(mapping[index])
 			
