@@ -91,7 +91,11 @@ def process_votes(votes, scores, twowers, boosts):
 	
 def calc_stats(scoredata,resp_ind,twowers,boosts):#calculate stats, dm if you want more
 	try:
-		scoredata.append(statistics.mean(scoredata[1]))	
+		scoredata.append(statistics.mean(scoredata[1]))
+		'''
+		if twowers[resp_ind].startswith('hanss314'):
+			scoredata[2]=1000
+		'''
 	except Exception:
 		print('\"{}\" by {} was not voted for'.format(scoredata[0],twowers[resp_ind]))
 		scoredata.append(0)
