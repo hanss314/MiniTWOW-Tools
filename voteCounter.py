@@ -60,9 +60,15 @@ def draw_header(prompt, base, drawer, responses):
 	drawer.text((15,0),prompt,font=bigArial, fill=(0,0,0,255))
 	
 	return (prompt, base, drawer, header_height)
+	
+def remove_dups(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
 
 def process_votes(votes, scores, twowers):	
 	for vote in votes:#maps votes to responses
+		vote = remove_dups(vote)
 		try:
 			percentage = 100
 			for resp_num in vote:
@@ -71,25 +77,28 @@ def process_votes(votes, scores, twowers):
 		except Exception:
 			pass
 
-	for scoredata in scores:#calculate stats, dm if you want more
-		try:
-			scoredata.append(statistics.mean(scoredata[1]))	
-		except Exception:
-			print('{} was not voted for'.format(scoredata[0]))
-			continue
-			
-		try:
-			scoredata.append(statistics.stdev(scoredata[1]))
-		except Exception:
-			scoredata.append(0)
-			
-		scoredata.append(len(scoredata[1]))#number of votes
-		scoredata[1]= twowers[scores.index(scoredata)]#twower name
-		scoredata[0],scoredata[1]=scoredata[1],scoredata[0]#rearranges list in order on chart
+	for scoredata in scores:e
+		scoredata = calc_stats(scoredata)
 		
 	mergeSort(scores)#sorts from best to worst. Mergesort for best worst case
 	return scores
 	
+def calc_stats(scoredata):#calculate stats, dm if you want more
+	try:
+		scoredata.append(statistics.mean(scoredata[1]))	
+	except Exception:
+		print('\"{}\" by {} was not voted for'.format(scoredata[0],twowers[scores.index(scoredata)]))
+		continue
+		
+	try:
+		scoredata.append(statistics.stdev(scoredata[1]))
+	except Exception:
+		scoredata.append(0)
+			
+	scoredata.append(len(scoredata[1]))#number of votes
+	scoredata[1]= twowers[scores.index(scoredata)]#twower name
+	scoredata[0],scoredata[1]=scoredata[1],scoredata[0]#rearranges list in order on chart
+		
 def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,header_height,indiv_twowers):#this one is a bit of a mess
 	backgroundCol=0
 	addBackground=0
