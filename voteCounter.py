@@ -24,12 +24,18 @@ def parse_args():
 	
 	twowers = []
 	responses = []
+	boosts = {}
 	
 	with open('./{}/responses.csv'.format(path),'r') as csvfile:#read responses
 		reader = csv.reader(csvfile)
 		for row in reader:
 			twowers.append(row[0])
 			responses.append(row[1])
+			
+			try:
+				boosts[row[0]] = int(row[2])
+			except:
+				pass
 			
 	scores = [[response,[]]for response in responses]		
 	votes = json.load(open('./{}/votes.json'.format(path),'r'))
@@ -44,7 +50,7 @@ def parse_args():
 	else:
 		elim_number = round(int(args.perc_elim)*len(indiv_twowers)/100)
 	
-	return (path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number)
+	return (path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number, boosts)
 		
 def wrap_text(text,chars):
 	lines = textwrap.wrap(text,chars)
@@ -66,7 +72,7 @@ def remove_dups(seq):
     seen_add = seen.add
     return [x for x in seq if not (x in seen or seen_add(x))]
 
-def process_votes(votes, scores, twowers):	
+def process_votes(votes, scores, twowers, boosts):	
 	for vote in votes:#maps votes to responses
 		vote = remove_dups(vote)
 		try:
@@ -77,18 +83,24 @@ def process_votes(votes, scores, twowers):
 		except Exception:
 			pass
 
-	for scoredata in scores:e
-		scoredata = calc_stats(scoredata)
+	for scoredata in scores:
+		scoredata = calc_stats(scoredata,scores.index(scoredata),twowers,boosts)
 		
 	mergeSort(scores)#sorts from best to worst. Mergesort for best worst case
 	return scores
 	
-def calc_stats(scoredata):#calculate stats, dm if you want more
+def calc_stats(scoredata,resp_ind,twowers,boosts):#calculate stats, dm if you want more
 	try:
 		scoredata.append(statistics.mean(scoredata[1]))	
 	except Exception:
-		print('\"{}\" by {} was not voted for'.format(scoredata[0],twowers[scores.index(scoredata)]))
-		continue
+		print('\"{}\" by {} was not voted for'.format(scoredata[0],twowers[resp_ind]))
+		scoredata.append(0)
+	try:	
+		scoredata[2] += boosts[twowers[resp_ind]]
+		if scoredata[2]>100:
+			scoredata[2]=100
+	except:
+		pass
 		
 	try:
 		scoredata.append(statistics.stdev(scoredata[1]))
@@ -96,10 +108,11 @@ def calc_stats(scoredata):#calculate stats, dm if you want more
 		scoredata.append(0)
 			
 	scoredata.append(len(scoredata[1]))#number of votes
-	scoredata[1]= twowers[scores.index(scoredata)]#twower name
+	scoredata[1]= twowers[resp_ind]#twower name
 	scoredata[0],scoredata[1]=scoredata[1],scoredata[0]#rearranges list in order on chart
+	return scoredata
 		
-def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,header_height,indiv_twowers):#this one is a bit of a mess
+def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,header_height,indiv_twowers,boosts):#this one is a bit of a mess
 	backgroundCol=0
 	addBackground=0
 	ranking=1
@@ -169,8 +182,17 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 				response,font=arial,fill=(0,0,0,255))
 		
 		#draws data
-		drawer.text((998,int(67/2*i+7)+header_height),
-			str(mean)[:5]+'%',font=arial,fill=(0,0,0,255))
+		try:
+			mean_str = str(mean-boosts[twower])[:4]
+			mean_str += '+({})'.format(boosts[twower])
+			mean_str += '%'
+			
+			
+			drawer.text((998,int(67/2*i+7)+header_height),
+				mean_str,font=arial,fill=(0,0,0,255))
+		except:
+			drawer.text((998,int(67/2*i+7)+header_height),
+				str(mean)[:5]+'%',font=arial,fill=(0,0,0,255))
 			
 		drawer.text((1164,int(67/2*i+7)+header_height),
 			str(standev)[:5]+'%',font=arial,fill=(0,0,0,255))
@@ -215,7 +237,7 @@ def mergeSort(alist):
             k=k+1
 	
 def main():
-	path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number = parse_args()
+	path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number, boosts = parse_args()
 	
 	
 	base = Image.new('RGBA',(1368,1368),color=(255,255,255))
@@ -223,8 +245,8 @@ def main():
 
 	
 	prompt, base, drawer, header_height = draw_header(prompt, base, drawer, responses)
-	scores = process_votes(votes, scores, twowers)
-	draw_rankings(scores,top_number,elim_number,twower_count,base,drawer,header_height,indiv_twowers)
+	scores = process_votes(votes, scores, twowers, boosts)
+	draw_rankings(scores,top_number,elim_number,twower_count,base,drawer,header_height,indiv_twowers, boosts)
 	
 	base.save('./'+path+'/results.png')
 
