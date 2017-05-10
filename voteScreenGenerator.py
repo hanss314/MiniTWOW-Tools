@@ -1,8 +1,9 @@
-from PIL import Image, ImageDraw, ImageFont
 import random, argparse, re, os, textwrap, json, csv
+from PIL import Image, ImageDraw, ImageFont
+from textTools import wrap_text
 
 #font change if needed
-font = ImageFont.truetype('./resources/overpass.otf',30)
+font = ImageFont.truetype('./resources/arial.ttf',30)
 
 def parse_args(keylist):
 	parser = argparse.ArgumentParser()
@@ -34,10 +35,10 @@ def create_random_order(submissions,its,submissionCount):
 	return voteList
 
 		
-def wrap_text(text,width):
+'''def wrap_text(text,width):
 	lines = textwrap.wrap(text,width)
 	new_text='\n'.join(lines)
-	return new_text
+	return new_text'''
 	
 def count_words(text):
 	indivWords = re.sub('/[^a-zA-Z0-9 ]/','',text).split(' ')#removes non alphanumeric and space
@@ -73,7 +74,7 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
 				voteList[int(voteNumber/submissionCount)].append(submissionNumber)
 				submissionNumber = voteList[int(voteNumber/submissionCount)][voteNumber%submissionCount]
 				
-			response = wrap_text(submissions[submissionNumber],80)
+			response = wrap_text(submissions[submissionNumber],1100,font,drawer)
 			drawer.text((100,71*i+60-drawer.textsize(response,font)[1]/2), response, font=font, fill=(0,0,0))
 			distance = 130+drawer.textsize(response,font)[0]
 			

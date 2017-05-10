@@ -2,6 +2,7 @@ import ast, argparse, statistics, textwrap, csv, json, os
 from PIL import Image, ImageDraw, ImageFont
 from voteConverter import convert
 from booksonaGen import make_book
+from textTools import wrap_text
 
 
 #fonts, change if needed
@@ -19,7 +20,7 @@ def parse_args():
 	args = parser.parse_args()
 	path = args.input
 	
-	convert(path)
+	votes = convert(path)
 	prompt = open('./{}/prompt.txt'.format(path),'r').read().split('\n')[0]
 	
 	twowers = []
@@ -37,8 +38,8 @@ def parse_args():
 			except:
 				pass
 			
-	scores = [[response,[]]for response in responses]		
-	votes = json.load(open('./{}/votes.json'.format(path),'r'))
+	scores = [[response,[],0.0]for response in responses]		
+	#votes = json.load(open('./{}/votes.json'.format(path),'r'))
 	
 	indiv_twowers = list(set(twowers))#data about the data (metadata?)
 	twower_count = len(indiv_twowers)
@@ -52,13 +53,9 @@ def parse_args():
 	
 	return (path, prompt, twowers, responses, scores, votes, indiv_twowers, twower_count, top_number, elim_number, boosts)
 		
-def wrap_text(text,chars):
-	lines = textwrap.wrap(text,chars)
-	new_text='\n'.join(lines)
-	return new_text
 	
 def draw_header(prompt, base, drawer, responses):
-	prompt = wrap_text(prompt,100)
+	prompt = wrap_text(prompt,1000,bigfont,drawer)
 	header_height = drawer.textsize(prompt,bigfont)[1]+35
 	base = Image.new('RGBA',(1368,header_height+int(67/2*len(responses))),color=(255,255,255,255))
 	drawer = ImageDraw.Draw(base)
@@ -73,32 +70,39 @@ def remove_dups(seq):
     return [x for x in seq if not (x in seen or seen_add(x))]
 
 def process_votes(votes, scores, twowers, boosts):	
-	for vote in votes:#maps votes to responses
-		vote = remove_dups(vote)
-		try:
-			percentage = 100
-			for resp_num in vote:
-				scores[resp_num][1].append(percentage)
-				percentage -= 11
-		except Exception:
-			pass
+
+	for user_vote in votes.values():#maps votes to responses
+		count = 1/len(user_vote)
+		for vote in user_vote:
+			vote = remove_dups(vote)
+			try:
+				percentage = 100.0
+				for resp_num in vote:
+						
+					scores[resp_num][1].append(percentage*count)
+					scores[resp_num][2] += count
+					percentage -= 100/9
+			except Exception:
+				pass
+			
 
 	for scoredata in scores:
 		scoredata = calc_stats(scoredata,scores.index(scoredata),twowers,boosts)
+		
 		
 	mergeSort(scores)#sorts from best to worst. Mergesort for best worst case
 	return scores
 	
 def calc_stats(scoredata,resp_ind,twowers,boosts):#calculate stats, dm if you want more
 	try:
-		scoredata.append(statistics.mean(scoredata[1]))
+		scoredata[2] = sum(scoredata[1])/scoredata[2]
 		'''
 		if twowers[resp_ind].startswith('hanss314'):
 			scoredata[2]=1000
 		'''
 	except Exception:
 		print('\"{}\" by {} was not voted for'.format(scoredata[0],twowers[resp_ind]))
-		scoredata.append(0)
+		scoredata[2] =0
 	try:	
 		scoredata[2] += boosts[twowers[resp_ind]]
 		if scoredata[2]>100:
@@ -110,7 +114,7 @@ def calc_stats(scoredata,resp_ind,twowers,boosts):#calculate stats, dm if you wa
 		scoredata.append(statistics.stdev(scoredata[1]))
 	except Exception:
 		scoredata.append(0)
-			
+	
 	scoredata.append(len(scoredata[1]))#number of votes
 	scoredata[1]= twowers[resp_ind]#twower name
 	scoredata[0],scoredata[1]=scoredata[1],scoredata[0]#rearranges list in order on chart
@@ -173,14 +177,15 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			drawer.text((320-drawer.textsize(twower,font)[0],int(67/2*i+7)+header_height),
 				twower,font=font,fill=(0,0,0,255))
 				
-		if drawer.textsize(response,font)[0] > 618: #draws responses
-			responseLines = textwrap.wrap(response,90)
-			response = ''
-			for s in responseLines:
-				response += (s+'\n')
-				
-			drawer.text((378,int(67/2*i)+header_height),
-				response,font=smallfont,fill=(0,0,0,255))
+		if drawer.textsize(response,font)[0] > 600: #draws responses
+			response = wrap_text(response,600,smallfont,drawer)
+			
+			if response.count('\n') == 0:
+				drawer.text((378,int(67/2*i+8)+header_height),
+					response,font=smallfont,fill=(0,0,0,255))
+			else:
+				drawer.text((378,int(67/2*i)+header_height),
+					response,font=smallfont,fill=(0,0,0,255))
 		else:
 			drawer.text((378,int(67/2*i+7)+header_height),
 				response,font=font,fill=(0,0,0,255))
