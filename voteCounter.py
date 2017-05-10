@@ -4,10 +4,10 @@ from voteConverter import convert
 from booksonaGen import make_book
 
 
-#fonts
-arial = ImageFont.truetype('./resources/arial.ttf',20)
-bigArial =  ImageFont.truetype('./resources/arial.ttf',30)
-smallArial = ImageFont.truetype('./resources/arial.ttf',13)
+#fonts change if needed
+font = ImageFont.truetype('./resources/arial.ttf',20)
+bigfont =  ImageFont.truetype('./resources/arial.ttf',30)
+smallfont = ImageFont.truetype('./resources/arial.ttf',13)
 
 
 
@@ -59,11 +59,11 @@ def wrap_text(text,chars):
 	
 def draw_header(prompt, base, drawer, responses):
 	prompt = wrap_text(prompt,100)
-	header_height = drawer.textsize(prompt,bigArial)[1]+35
+	header_height = drawer.textsize(prompt,bigfont)[1]+35
 	base = Image.new('RGBA',(1368,header_height+int(67/2*len(responses))),color=(255,255,255,255))
 	drawer = ImageDraw.Draw(base)
 	base.paste(Image.open('./resources/header.png'),(0,header_height-40))
-	drawer.text((15,0),prompt,font=bigArial, fill=(0,0,0,255))
+	drawer.text((15,0),prompt,font=bigfont, fill=(0,0,0,255))
 	
 	return (prompt, base, drawer, header_height)
 	
@@ -162,28 +162,28 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			else:
 				rankingString = str(ranking)+'th'
 				
-			drawer.text((15,int(67/2*i+7)+header_height),rankingString,font=arial,fill=(0,0,0,255))
+			drawer.text((15,int(67/2*i+7)+header_height),rankingString,font=font,fill=(0,0,0,255))
 			ranking += 1
 			
-		if drawer.textsize(twower,arial)[0] > 255: #draws twower name
-			drawer.text((320-drawer.textsize(twower,smallArial)[0],int(67/2*i+7)+header_height),
-				twower,font=smallArial,fill=(0,0,0,255))
+		if drawer.textsize(twower,font)[0] > 255: #draws twower name
+			drawer.text((320-drawer.textsize(twower,smallfont)[0],int(67/2*i+7)+header_height),
+				twower,font=smallfont,fill=(0,0,0,255))
 				
 		else:
-			drawer.text((320-drawer.textsize(twower,arial)[0],int(67/2*i+7)+header_height),
-				twower,font=arial,fill=(0,0,0,255))
+			drawer.text((320-drawer.textsize(twower,font)[0],int(67/2*i+7)+header_height),
+				twower,font=font,fill=(0,0,0,255))
 				
-		if drawer.textsize(response,arial)[0] > 618: #draws responses
+		if drawer.textsize(response,font)[0] > 618: #draws responses
 			responseLines = textwrap.wrap(response,90)
 			response = ''
 			for s in responseLines:
 				response += (s+'\n')
 				
 			drawer.text((378,int(67/2*i)+header_height),
-				response,font=smallArial,fill=(0,0,0,255))
+				response,font=smallfont,fill=(0,0,0,255))
 		else:
 			drawer.text((378,int(67/2*i+7)+header_height),
-				response,font=arial,fill=(0,0,0,255))
+				response,font=font,fill=(0,0,0,255))
 		
 		draw_stats(drawer,twower,mean,standev,boosts,voteCount,header_height,i)
 		
@@ -200,17 +200,17 @@ def draw_stats(drawer,twower,mean,standev,boosts,voteCount,header_height,rank):
 		
 		
 		drawer.text((998,int(67/2*rank+7)+header_height),
-			mean_str,font=arial,fill=(0,0,0,255))
+			mean_str,font=font,fill=(0,0,0,255))
 	except:
 		drawer.text((998,int(67/2*rank+7)+header_height),
-			str(mean)[:5]+'%',font=arial,fill=(0,0,0,255))
+			str(mean)[:5]+'%',font=font,fill=(0,0,0,255))
 		
 	drawer.text((1164,int(67/2*rank+7)+header_height),
-		str(standev)[:5]+'%',font=arial,fill=(0,0,0,255))
+		str(standev)[:5]+'%',font=font,fill=(0,0,0,255))
 		
-	drawer.text((1309-drawer.textsize(str(voteCount),arial)[0]/2,
+	drawer.text((1309-drawer.textsize(str(voteCount),font)[0]/2,
 		int(67/2*rank+7)+header_height),str(voteCount),
-		font=arial,fill=(0,0,0,255))
+		font=font,fill=(0,0,0,255))
 		
 def mergeSort(alist):
     if len(alist)>1:

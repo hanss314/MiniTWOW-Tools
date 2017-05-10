@@ -1,7 +1,8 @@
 from PIL import Image, ImageDraw, ImageFont
 import random, argparse, re, os, textwrap, json, csv
 
-arial = ImageFont.truetype('./resources/arial.ttf',30)
+#font change if needed
+font = ImageFont.truetype('./resources/overpass.otf',30)
 
 def parse_args(keylist):
 	parser = argparse.ArgumentParser()
@@ -58,8 +59,8 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
 		existingEntries = []
 		
 		word = keylist[keyorder[iteration]].upper()
-		w = drawer.textsize(word,arial)[0]
-		drawer.text((1360-int(w/2), 30), word, font=arial, fill="black")
+		w = drawer.textsize(word,font)[0]
+		drawer.text((1360-int(w/2), 30), word, font=font, fill="black")
 		
 		text_writer.write(word+'\n\n')
 		
@@ -73,15 +74,15 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
 				submissionNumber = voteList[int(voteNumber/submissionCount)][voteNumber%submissionCount]
 				
 			response = wrap_text(submissions[submissionNumber],85)
-			drawer.text((100,71*i+78-drawer.textsize(response,arial)[1]/2), response, font=arial, fill=(0,0,0))
-			distance = 130+drawer.textsize(response,arial)[0]
+			drawer.text((100,71*i+60-drawer.textsize(response,font)[1]/2), response, font=font, fill=(0,0,0))
+			distance = 130+drawer.textsize(response,font)[0]
 			
 			wordCount = count_words(response)
 					
 			if wordCount >10:
-				drawer.text((distance,71*i+60), str(wordCount), font=arial, fill=(255,0,0))#blue
+				drawer.text((distance,71*i+45), str(wordCount), font=font, fill=(255,0,0))#blue
 			else:
-				drawer.text((distance,71*i+60), str(wordCount), font=arial, fill=(30,30,255))#red
+				drawer.text((distance,71*i+45), str(wordCount), font=font, fill=(30,30,255))#red
 			
 			existingEntries.append(submissionNumber)
 			ballot_line = ':regional_indicator_{}: {} ({})\n'.format(chr(i+97),submissions[submissionNumber],wordCount)

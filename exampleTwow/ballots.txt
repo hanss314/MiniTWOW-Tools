@@ -1,148 +1,80 @@
-BREAK
+CONSIDER
 
-:regional_indicator_a: response 1 (2)
-:regional_indicator_b: this is the sixth response (5)
+:regional_indicator_a: looks like endr has two responses just to mess things up (11)
+:regional_indicator_b: response 2 (2)
 :regional_indicator_c: we need ten responses (4)
-:regional_indicator_d: almost there (2)
-:regional_indicator_e: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_f: this s a great response (5)
-:regional_indicator_g: response 2 (2)
-:regional_indicator_h: looks like endr has two responses just to mess things up (11)
-:regional_indicator_i: firey firey firey (3)
+:regional_indicator_d: this s a great response (5)
+:regional_indicator_e: this is the sixth response (5)
+:regional_indicator_f: firey firey firey (3)
+:regional_indicator_g: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+:regional_indicator_h: response 1 (2)
+:regional_indicator_i: almost there (2)
 :regional_indicator_j: response 3 (2)
 
 
 
 
 
-TEAM
-
-:regional_indicator_a: firey firey firey (3)
-:regional_indicator_b: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_c: this s a great response (5)
-:regional_indicator_d: response 1 (2)
-:regional_indicator_e: we need ten responses (4)
-:regional_indicator_f: this is the sixth response (5)
-:regional_indicator_g: almost there (2)
-:regional_indicator_h: response 3 (2)
-:regional_indicator_i: looks like endr has two responses just to mess things up (11)
-:regional_indicator_j: response 2 (2)
-
-
-
-
-
-HUGE
-
-:regional_indicator_a: looks like endr has two responses just to mess things up (11)
-:regional_indicator_b: response 3 (2)
-:regional_indicator_c: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_d: firey firey firey (3)
-:regional_indicator_e: response 2 (2)
-:regional_indicator_f: this s a great response (5)
-:regional_indicator_g: we need ten responses (4)
-:regional_indicator_h: almost there (2)
-:regional_indicator_i: response 1 (2)
-:regional_indicator_j: this is the sixth response (5)
-
-
-
-
-
-PARENT
-
-:regional_indicator_a: response 3 (2)
-:regional_indicator_b: this s a great response (5)
-:regional_indicator_c: firey firey firey (3)
-:regional_indicator_d: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_e: we need ten responses (4)
-:regional_indicator_f: almost there (2)
-:regional_indicator_g: this is the sixth response (5)
-:regional_indicator_h: response 2 (2)
-:regional_indicator_i: response 1 (2)
-:regional_indicator_j: looks like endr has two responses just to mess things up (11)
-
-
-
-
-
-CONSIDER
-
-:regional_indicator_a: response 3 (2)
-:regional_indicator_b: almost there (2)
-:regional_indicator_c: response 1 (2)
-:regional_indicator_d: response 2 (2)
-:regional_indicator_e: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_f: firey firey firey (3)
-:regional_indicator_g: this s a great response (5)
-:regional_indicator_h: this is the sixth response (5)
-:regional_indicator_i: looks like endr has two responses just to mess things up (11)
-:regional_indicator_j: we need ten responses (4)
-
-
-
-
-
-MILE
-
-:regional_indicator_a: we need ten responses (4)
-:regional_indicator_b: this s a great response (5)
-:regional_indicator_c: response 1 (2)
-:regional_indicator_d: firey firey firey (3)
-:regional_indicator_e: this is the sixth response (5)
-:regional_indicator_f: response 2 (2)
-:regional_indicator_g: response 3 (2)
-:regional_indicator_h: almost there (2)
-:regional_indicator_i: looks like endr has two responses just to mess things up (11)
-:regional_indicator_j: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-
-
-
-
-
-YOUNG
-
-:regional_indicator_a: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_b: this is the sixth response (5)
-:regional_indicator_c: we need ten responses (4)
-:regional_indicator_d: almost there (2)
-:regional_indicator_e: firey firey firey (3)
-:regional_indicator_f: this s a great response (5)
-:regional_indicator_g: response 2 (2)
-:regional_indicator_h: response 3 (2)
-:regional_indicator_i: response 1 (2)
-:regional_indicator_j: looks like endr has two responses just to mess things up (11)
-
-
-
-
-
-WAR
+HUNT
 
 :regional_indicator_a: response 2 (2)
 :regional_indicator_b: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_c: looks like endr has two responses just to mess things up (11)
-:regional_indicator_d: almost there (2)
-:regional_indicator_e: response 3 (2)
-:regional_indicator_f: response 1 (2)
-:regional_indicator_g: this is the sixth response (5)
-:regional_indicator_h: firey firey firey (3)
+:regional_indicator_c: this is the sixth response (5)
+:regional_indicator_d: response 3 (2)
+:regional_indicator_e: looks like endr has two responses just to mess things up (11)
+:regional_indicator_f: firey firey firey (3)
+:regional_indicator_g: response 1 (2)
+:regional_indicator_h: this s a great response (5)
 :regional_indicator_i: we need ten responses (4)
-:regional_indicator_j: this s a great response (5)
+:regional_indicator_j: almost there (2)
 
 
 
 
 
-EXAMPLE
+WATCH
 
-:regional_indicator_a: response 3 (2)
-:regional_indicator_b: response 1 (2)
-:regional_indicator_c: this s a great response (5)
-:regional_indicator_d: almost there (2)
-:regional_indicator_e: response 2 (2)
+:regional_indicator_a: this s a great response (5)
+:regional_indicator_b: this is the sixth response (5)
+:regional_indicator_c: firey firey firey (3)
+:regional_indicator_d: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+:regional_indicator_e: we need ten responses (4)
+:regional_indicator_f: response 1 (2)
+:regional_indicator_g: response 3 (2)
+:regional_indicator_h: response 2 (2)
+:regional_indicator_i: looks like endr has two responses just to mess things up (11)
+:regional_indicator_j: almost there (2)
+
+
+
+
+
+SECTION
+
+:regional_indicator_a: this is the sixth response (5)
+:regional_indicator_b: this s a great response (5)
+:regional_indicator_c: response 1 (2)
+:regional_indicator_d: response 2 (2)
+:regional_indicator_e: response 3 (2)
 :regional_indicator_f: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_g: looks like endr has two responses just to mess things up (11)
+:regional_indicator_g: we need ten responses (4)
+:regional_indicator_h: looks like endr has two responses just to mess things up (11)
+:regional_indicator_i: firey firey firey (3)
+:regional_indicator_j: almost there (2)
+
+
+
+
+
+WISH
+
+:regional_indicator_a: looks like endr has two responses just to mess things up (11)
+:regional_indicator_b: this s a great response (5)
+:regional_indicator_c: response 3 (2)
+:regional_indicator_d: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+:regional_indicator_e: response 1 (2)
+:regional_indicator_f: response 2 (2)
+:regional_indicator_g: almost there (2)
 :regional_indicator_h: firey firey firey (3)
 :regional_indicator_i: this is the sixth response (5)
 :regional_indicator_j: we need ten responses (4)
@@ -151,18 +83,86 @@ EXAMPLE
 
 
 
-CORN
+NOUN
+
+:regional_indicator_a: we need ten responses (4)
+:regional_indicator_b: firey firey firey (3)
+:regional_indicator_c: this s a great response (5)
+:regional_indicator_d: looks like endr has two responses just to mess things up (11)
+:regional_indicator_e: response 1 (2)
+:regional_indicator_f: almost there (2)
+:regional_indicator_g: this is the sixth response (5)
+:regional_indicator_h: response 2 (2)
+:regional_indicator_i: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+:regional_indicator_j: response 3 (2)
+
+
+
+
+
+BOY
+
+:regional_indicator_a: almost there (2)
+:regional_indicator_b: response 2 (2)
+:regional_indicator_c: response 1 (2)
+:regional_indicator_d: we need ten responses (4)
+:regional_indicator_e: this is the sixth response (5)
+:regional_indicator_f: firey firey firey (3)
+:regional_indicator_g: this s a great response (5)
+:regional_indicator_h: looks like endr has two responses just to mess things up (11)
+:regional_indicator_i: response 3 (2)
+:regional_indicator_j: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+
+
+
+
+
+FLOOR
 
 :regional_indicator_a: this is the sixth response (5)
-:regional_indicator_b: looks like endr has two responses just to mess things up (11)
-:regional_indicator_c: almost there (2)
-:regional_indicator_d: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_e: this s a great response (5)
-:regional_indicator_f: response 2 (2)
+:regional_indicator_b: response 3 (2)
+:regional_indicator_c: we need ten responses (4)
+:regional_indicator_d: response 2 (2)
+:regional_indicator_e: almost there (2)
+:regional_indicator_f: looks like endr has two responses just to mess things up (11)
 :regional_indicator_g: firey firey firey (3)
-:regional_indicator_h: we need ten responses (4)
+:regional_indicator_h: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
 :regional_indicator_i: response 1 (2)
-:regional_indicator_j: response 3 (2)
+:regional_indicator_j: this s a great response (5)
+
+
+
+
+
+DEVELOP
+
+:regional_indicator_a: we need ten responses (4)
+:regional_indicator_b: looks like endr has two responses just to mess things up (11)
+:regional_indicator_c: this s a great response (5)
+:regional_indicator_d: this is the sixth response (5)
+:regional_indicator_e: response 1 (2)
+:regional_indicator_f: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+:regional_indicator_g: response 2 (2)
+:regional_indicator_h: firey firey firey (3)
+:regional_indicator_i: response 3 (2)
+:regional_indicator_j: almost there (2)
+
+
+
+
+
+HISTORY
+
+:regional_indicator_a: this s a great response (5)
+:regional_indicator_b: we need ten responses (4)
+:regional_indicator_c: firey firey firey (3)
+:regional_indicator_d: response 2 (2)
+:regional_indicator_e: response 3 (2)
+:regional_indicator_f: this is the sixth response (5)
+:regional_indicator_g: almost there (2)
+:regional_indicator_h: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+:regional_indicator_i: looks like endr has two responses just to mess things up (11)
+:regional_indicator_j: response 1 (2)
 
 
 
