@@ -17,7 +17,11 @@ def convert(path):
 		
 	for vote in votes:
 		indexes = []
-		mapping = keywords[vote[0]]
+		mapping = []
+		try:
+			mapping = keywords[vote[0]]
+		except:
+			continue
 		order = []
 		
 		for c in vote[1].upper():
