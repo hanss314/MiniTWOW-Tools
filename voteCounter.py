@@ -4,7 +4,7 @@ from voteConverter import convert
 from booksonaGen import make_book
 
 
-#fonts change if needed
+#fonts, change if needed
 font = ImageFont.truetype('./resources/arial.ttf',20)
 bigfont =  ImageFont.truetype('./resources/arial.ttf',30)
 smallfont = ImageFont.truetype('./resources/arial.ttf',13)

@@ -73,7 +73,7 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
 				voteList[int(voteNumber/submissionCount)].append(submissionNumber)
 				submissionNumber = voteList[int(voteNumber/submissionCount)][voteNumber%submissionCount]
 				
-			response = wrap_text(submissions[submissionNumber],85)
+			response = wrap_text(submissions[submissionNumber],80)
 			drawer.text((100,71*i+60-drawer.textsize(response,font)[1]/2), response, font=font, fill=(0,0,0))
 			distance = 130+drawer.textsize(response,font)[0]
 			
