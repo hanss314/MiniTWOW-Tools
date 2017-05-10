@@ -80,9 +80,9 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
 			wordCount = count_words(response)
 					
 			if wordCount >10:
-				drawer.text((distance,71*i+45), str(wordCount), font=font, fill=(255,0,0))#blue
+				drawer.text((distance,int(71.5*i)+42), str(wordCount), font=font, fill=(255,0,0))#blue
 			else:
-				drawer.text((distance,71*i+45), str(wordCount), font=font, fill=(30,30,255))#red
+				drawer.text((distance,int(71.5*i)+42), str(wordCount), font=font, fill=(30,30,255))#red
 			
 			existingEntries.append(submissionNumber)
 			ballot_line = ':regional_indicator_{}: {} ({})\n'.format(chr(i+97),submissions[submissionNumber],wordCount)
