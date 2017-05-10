@@ -71,7 +71,7 @@ def remove_dups(seq):
 
 def process_votes(votes, scores, twowers, boosts):	
 
-	for user_vote in votes.values():#maps votes to responses
+	for user_vote in votes:#maps votes to responses
 		count = 1/len(user_vote)
 		for vote in user_vote:
 			vote = remove_dups(vote)

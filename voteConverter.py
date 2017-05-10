@@ -4,8 +4,8 @@ def convert(path):
 
 	keywords = json.load(open('./{}/dict.json'.format(path),'r'))
 	vote_strings={}
-	votes = {}
-	final_votes = {}
+	votes = []
+	final_votes = []
 		
 	with open('./{}/votes.csv'.format(path),'r') as csvfile:
 		reader = csv.reader(csvfile)
@@ -18,7 +18,7 @@ def convert(path):
 				
 	
 
-	for voter, user_vote_str in vote_strings.items():
+	for user_vote_str in vote_strings.values():
 		user_vote = []
 		
 		for vote in user_vote_str:
@@ -28,10 +28,10 @@ def convert(path):
 			current = current.split(' ')
 			user_vote.append(current)
 			
-		votes[voter]=user_vote
+		votes.append(user_vote)
 		
 		
-	for voter, user_vote in votes.items():
+	for user_vote in votes:
 		final_vote = []
 		for vote in user_vote:
 			indexes = []
@@ -49,7 +49,7 @@ def convert(path):
 				order.append(mapping[index])
 				
 			final_vote.append(order)
-		final_votes[voter] = final_vote
+		final_votes.append(final_vote)
 	
 	return final_votes
 	#open('./{}/votes.json'.format(path),'w').write(json.dumps(final_votes))
