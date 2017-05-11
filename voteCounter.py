@@ -96,6 +96,14 @@ def process_votes(votes, scores, twowers, boosts):
 		
 		
 	mergeSort(scores)#sorts from best to worst. Mergesort for best worst case
+	
+	with open('results.csv', 'w') as result_file:
+	
+		writer = csv.writer(result_file)
+		writer.writerow(['Twower','Response','Percentile','Standard Deviation','Votes'])
+
+		writer.writerows(scores)
+	
 	return scores
 	
 def calc_stats(scoredata,resp_ind,twowers,boosts):#calculate stats, dm if you want more
