@@ -1,168 +1,168 @@
-MEASURE
+DREAM
+
+:regional_indicator_a: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_b: response 3 (2)
+:regional_indicator_c: this is the sixth response (5)
+:regional_indicator_d: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_e: response 1 (2)
+:regional_indicator_f: response 2 (2)
+:regional_indicator_g: firey firey firey (3)
+:regional_indicator_h: this s a great response (5)
+:regional_indicator_i: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_j: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+
+
+
+
+
+GUESS
+
+:regional_indicator_a: response 1 (2)
+:regional_indicator_b: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_c: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_d: firey firey firey (3)
+:regional_indicator_e: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_f: response 2 (2)
+:regional_indicator_g: this s a great response (5)
+:regional_indicator_h: this is the sixth response (5)
+:regional_indicator_i: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_j: response 3 (2)
+
+
+
+
+
+YES
 
 :regional_indicator_a: response 3 (2)
-:regional_indicator_b: almost there (2)
-:regional_indicator_c: we need ten responses (4)
-:regional_indicator_d: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_e: response 1 (2)
-:regional_indicator_f: this is the sixth response (5)
+:regional_indicator_b: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_c: firey firey firey (3)
+:regional_indicator_d: this is the sixth response (5)
+:regional_indicator_e: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_f: response 1 (2)
 :regional_indicator_g: this s a great response (5)
-:regional_indicator_h: firey firey firey (3)
-:regional_indicator_i: response 2 (2)
-:regional_indicator_j: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
+:regional_indicator_h: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_i: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_j: response 2 (2)
 
 
 
 
 
-DECIDE
+NOUN
 
-:regional_indicator_a: we need ten responses (4)
+:regional_indicator_a: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
 :regional_indicator_b: this s a great response (5)
-:regional_indicator_c: almost there (2)
+:regional_indicator_c: response 2 (2)
 :regional_indicator_d: response 1 (2)
-:regional_indicator_e: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_f: firey firey firey (3)
+:regional_indicator_e: response 3 (2)
+:regional_indicator_f: this is the sixth response (5)
+:regional_indicator_g: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_h: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_i: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_j: firey firey firey (3)
+
+
+
+
+
+MOUNT
+
+:regional_indicator_a: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_b: this is the sixth response (5)
+:regional_indicator_c: response 1 (2)
+:regional_indicator_d: response 3 (2)
+:regional_indicator_e: this s a great response (5)
+:regional_indicator_f: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_g: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_h: firey firey firey (3)
+:regional_indicator_i: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_j: response 2 (2)
+
+
+
+
+
+AMONG
+
+:regional_indicator_a: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_b: this s a great response (5)
+:regional_indicator_c: response 1 (2)
+:regional_indicator_d: response 2 (2)
+:regional_indicator_e: this is the sixth response (5)
+:regional_indicator_f: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_g: firey firey firey (3)
+:regional_indicator_h: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_i: response 3 (2)
+:regional_indicator_j: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+
+
+
+
+
+ABOVE
+
+:regional_indicator_a: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_b: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_c: this s a great response (5)
+:regional_indicator_d: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_e: this is the sixth response (5)
+:regional_indicator_f: response 1 (2)
 :regional_indicator_g: response 3 (2)
 :regional_indicator_h: response 2 (2)
-:regional_indicator_i: this is the sixth response (5)
-:regional_indicator_j: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
+:regional_indicator_i: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_j: firey firey firey (3)
 
 
 
 
 
-GUIDE
-
-:regional_indicator_a: response 2 (2)
-:regional_indicator_b: almost there (2)
-:regional_indicator_c: this s a great response (5)
-:regional_indicator_d: this is the sixth response (5)
-:regional_indicator_e: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_f: firey firey firey (3)
-:regional_indicator_g: response 3 (2)
-:regional_indicator_h: we need ten responses (4)
-:regional_indicator_i: response 1 (2)
-:regional_indicator_j: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-
-
-
-
-
-PRODUCT
-
-:regional_indicator_a: response 3 (2)
-:regional_indicator_b: this s a great response (5)
-:regional_indicator_c: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_d: response 1 (2)
-:regional_indicator_e: we need ten responses (4)
-:regional_indicator_f: response 2 (2)
-:regional_indicator_g: almost there (2)
-:regional_indicator_h: firey firey firey (3)
-:regional_indicator_i: this is the sixth response (5)
-:regional_indicator_j: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-
-
-
-
-
-FAMILY
-
-:regional_indicator_a: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_b: response 3 (2)
-:regional_indicator_c: we need ten responses (4)
-:regional_indicator_d: response 2 (2)
-:regional_indicator_e: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_f: firey firey firey (3)
-:regional_indicator_g: this is the sixth response (5)
-:regional_indicator_h: this s a great response (5)
-:regional_indicator_i: response 1 (2)
-:regional_indicator_j: almost there (2)
-
-
-
-
-
-RANGE
+CUT
 
 :regional_indicator_a: firey firey firey (3)
-:regional_indicator_b: response 1 (2)
-:regional_indicator_c: response 2 (2)
-:regional_indicator_d: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_e: this s a great response (5)
+:regional_indicator_b: this s a great response (5)
+:regional_indicator_c: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_d: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_e: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_f: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_g: response 1 (2)
+:regional_indicator_h: response 2 (2)
+:regional_indicator_i: this is the sixth response (5)
+:regional_indicator_j: response 3 (2)
+
+
+
+
+
+HUGE
+
+:regional_indicator_a: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_b: response 3 (2)
+:regional_indicator_c: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_d: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_e: response 2 (2)
 :regional_indicator_f: this is the sixth response (5)
-:regional_indicator_g: response 3 (2)
-:regional_indicator_h: almost there (2)
-:regional_indicator_i: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_j: we need ten responses (4)
+:regional_indicator_g: response 1 (2)
+:regional_indicator_h: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_i: firey firey firey (3)
+:regional_indicator_j: this s a great response (5)
 
 
 
 
 
-INVENT
+CHILDREN
 
 :regional_indicator_a: this is the sixth response (5)
-:regional_indicator_b: almost there (2)
+:regional_indicator_b: firey firey firey (3)
 :regional_indicator_c: response 3 (2)
-:regional_indicator_d: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_e: response 1 (2)
-:regional_indicator_f: we need ten responses (4)
-:regional_indicator_g: this s a great response (5)
-:regional_indicator_h: firey firey firey (3)
-:regional_indicator_i: response 2 (2)
-:regional_indicator_j: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-
-
-
-
-
-POUND
-
-:regional_indicator_a: response 3 (2)
-:regional_indicator_b: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_c: almost there (2)
-:regional_indicator_d: we need ten responses (4)
-:regional_indicator_e: this s a great response (5)
-:regional_indicator_f: firey firey firey (3)
-:regional_indicator_g: this is the sixth response (5)
-:regional_indicator_h: response 2 (2)
-:regional_indicator_i: response 1 (2)
-:regional_indicator_j: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-
-
-
-
-
-BAND
-
-:regional_indicator_a: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_b: response 1 (2)
-:regional_indicator_c: this is the sixth response (5)
-:regional_indicator_d: response 2 (2)
-:regional_indicator_e: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_f: response 3 (2)
-:regional_indicator_g: almost there (2)
-:regional_indicator_h: this s a great response (5)
-:regional_indicator_i: firey firey firey (3)
-:regional_indicator_j: we need ten responses (4)
-
-
-
-
-
-SPEND
-
-:regional_indicator_a: this s a great response (5)
-:regional_indicator_b: response 2 (2)
-:regional_indicator_c: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (9)
-:regional_indicator_d: this is the sixth response (5)
-:regional_indicator_e: response 3 (2)
-:regional_indicator_f: response 1 (2)
-:regional_indicator_g: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (33)
-:regional_indicator_h: almost there (2)
-:regional_indicator_i: we need ten responses (4)
-:regional_indicator_j: firey firey firey (3)
+:regional_indicator_d: this is a super long response just to see how line breaks work. I think this is enough. Actually that wasn't we have to go quite a bit longer to see how well it works (35)
+:regional_indicator_e: response 2 (2)
+:regional_indicator_f: 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 (10)
+:regional_indicator_g: response 1 (2)
+:regional_indicator_h: ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ (1)
+:regional_indicator_i: a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a (47)
+:regional_indicator_j: this s a great response (5)
 
 
 
