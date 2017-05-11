@@ -65,7 +65,7 @@ def draw_header(prompt, base, drawer, responses):
 	return (prompt, base, drawer, header_height)
 	
 
-def process_votes(votes, scores, twowers, boosts):	
+def process_votes(votes, scores, twowers, boosts,dir):	
 
 	for user_vote in votes:#maps votes to responses
 		count = 1/len(user_vote)
@@ -97,11 +97,11 @@ def process_votes(votes, scores, twowers, boosts):
 		
 	mergeSort(scores)#sorts from best to worst. Mergesort for best worst case
 	
-	with open('results.csv', 'w') as result_file:
+	with open('./{}/results.csv'.format(dir), 'w') as result_file:
 	
-		writer = csv.writer(result_file)
+		writer = csv.writer(result_file,lineterminator='\n')
 		writer.writerow(['Twower','Response','Percentile','Standard Deviation','Votes'])
-
+		writer.writerow([])
 		writer.writerows(scores)
 	
 	return scores
@@ -271,7 +271,7 @@ def main():
 
 	
 	prompt, base, drawer, header_height = draw_header(prompt, base, drawer, responses)
-	scores = process_votes(votes, scores, twowers, boosts)
+	scores = process_votes(votes, scores, twowers, boosts,path)
 	draw_rankings(scores,top_number,elim_number,twower_count,base,drawer,header_height,indiv_twowers, boosts)
 	
 	base.save('./'+path+'/results.png')
