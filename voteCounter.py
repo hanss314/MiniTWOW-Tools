@@ -64,24 +64,29 @@ def draw_header(prompt, base, drawer, responses):
 	
 	return (prompt, base, drawer, header_height)
 	
-def remove_dups(seq):
-    seen = set()
-    seen_add = seen.add
-    return [x for x in seq if not (x in seen or seen_add(x))]
 
 def process_votes(votes, scores, twowers, boosts):	
 
 	for user_vote in votes:#maps votes to responses
 		count = 1/len(user_vote)
+		
 		for vote in user_vote:
-			vote = remove_dups(vote)
-			try:
-				percentage = 100.0
-				for resp_num in vote:
+			percentage = 100.0
+			for resp_num in vote[:-1]:
 						
-					scores[resp_num][1].append(percentage*count)
-					scores[resp_num][2] += count
-					percentage -= 100/9
+				scores[resp_num][1].append(percentage*count)
+				scores[resp_num][2] += count
+				percentage -= 100/9
+				
+			try:			
+				
+				unvtd = len(vote[-1])-1
+				percentage_left = 50*unvtd/9
+			
+				for unvoted in vote[-1]:
+					scores[unvoted][1].append(-percentage_left)#negative as a flag so it doesn't count as a vote
+					scores[unvoted][2] += count
+								
 			except Exception:
 				pass
 			
@@ -94,8 +99,10 @@ def process_votes(votes, scores, twowers, boosts):
 	return scores
 	
 def calc_stats(scoredata,resp_ind,twowers,boosts):#calculate stats, dm if you want more
+	vote_count = len([vote for vote in scoredata[1] if vote >=0])
 	try:
-		scoredata[2] = sum(scoredata[1])/scoredata[2]
+		positive_list = [abs(vote) for vote in scoredata[1]]
+		scoredata[2] = sum(positive_list)/scoredata[2]
 		'''
 		if twowers[resp_ind].startswith('hanss314'):
 			scoredata[2]=1000
@@ -115,7 +122,7 @@ def calc_stats(scoredata,resp_ind,twowers,boosts):#calculate stats, dm if you wa
 	except Exception:
 		scoredata.append(0)
 	
-	scoredata.append(len(scoredata[1]))#number of votes
+	scoredata.append(vote_count)#number of votes
 	scoredata[1]= twowers[resp_ind]#twower name
 	scoredata[0],scoredata[1]=scoredata[1],scoredata[0]#rearranges list in order on chart
 	return scoredata
@@ -126,7 +133,7 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 	ranking=1
 	
 	for i in range(len(scores)):	
-		twower, response, mean, standev, voteCount = scores[i][0], scores[i][1], scores[i][2], scores[i][3], scores[i][4]
+		twower, response, mean, standev, vote_count = scores[i][0], scores[i][1], scores[i][2], scores[i][3], scores[i][4]
 		
 		if ranking == (top_number+1):#change background depending on ranking
 			backgroundCol = 1
@@ -190,14 +197,14 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			drawer.text((378,int(67/2*i+7)+header_height),
 				response,font=font,fill=(0,0,0,255))
 		
-		draw_stats(drawer,twower,mean,standev,boosts,voteCount,header_height,i)
+		draw_stats(drawer,twower,mean,standev,boosts,vote_count,header_height,i)
 		
 				
 		addBackground += 1
 		
 	return base
 	
-def draw_stats(drawer,twower,mean,standev,boosts,voteCount,header_height,rank):
+def draw_stats(drawer,twower,mean,standev,boosts,vote_count,header_height,rank):
 	try:
 		mean_str = str(mean-boosts[twower])[:4]
 		mean_str += '(+{})'.format(boosts[twower])
@@ -213,8 +220,8 @@ def draw_stats(drawer,twower,mean,standev,boosts,voteCount,header_height,rank):
 	drawer.text((1164,int(67/2*rank+7)+header_height),
 		str(standev)[:5]+'%',font=font,fill=(0,0,0,255))
 		
-	drawer.text((1309-drawer.textsize(str(voteCount),font)[0]/2,
-		int(67/2*rank+7)+header_height),str(voteCount),
+	drawer.text((1309-drawer.textsize(str(vote_count),font)[0]/2,
+		int(67/2*rank+7)+header_height),str(vote_count),
 		font=font,fill=(0,0,0,255))
 		
 def mergeSort(alist):

@@ -36,25 +36,36 @@ def convert(path):
 		for vote in user_vote:
 			indexes = []
 			mapping = []
+			not_voted_for = []
+			vote = remove_dups(vote)
 			try:
 				mapping = keywords[vote[0]]
+				
 			except:
 				continue
 			order = []
+			not_voted_for = list(mapping)
 			
 			for c in vote[1].upper():
 				indexes.append(ord(c)-65)
 
 			for index in indexes:
 				order.append(mapping[index])
+				not_voted_for.remove(mapping[index])
+				
+			order.append(not_voted_for)
 				
 			final_vote.append(order)
 		final_votes.append(final_vote)
 	
 	return final_votes
-	#open('./{}/votes.json'.format(path),'w').write(json.dumps(final_votes))
+	
+def remove_dups(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
 
 if __name__ == '__main__':
 	votes = convert(sys.argv[1])
 	print(votes)
-	open('./{}/votes.json'.format(path),'w').write(json.dumps(votes))
+	open('./{}/votes.json'.format(sys.argv[1]),'w').write(json.dumps(votes))
