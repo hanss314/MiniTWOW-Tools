@@ -177,11 +177,11 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			ranking += 1
 			
 		if drawer.textsize(twower,font)[0] > 255: #draws twower name
-			drawer.text((320-drawer.textsize(twower,smallfont)[0],int(67/2*i+7)+header_height),
+			drawer.text((60,int(67/2*i+7)+header_height),
 				twower,font=smallfont,fill=(0,0,0,255))
 				
 		else:
-			drawer.text((320-drawer.textsize(twower,font)[0],int(67/2*i+7)+header_height),
+			drawer.text((60,int(67/2*i+7)+header_height),
 				twower,font=font,fill=(0,0,0,255))
 				
 		if drawer.textsize(response,font)[0] > 600: #draws responses
@@ -206,19 +206,18 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 	
 def draw_stats(drawer,twower,mean,standev,boosts,vote_count,header_height,rank):
 	try:
-		mean_str = str(mean-boosts[twower])[:4]
+		mean_str = "%.2f" % round(mean-boosts[twower],2)
 		mean_str += '(+{})'.format(boosts[twower])
-		mean_str += '%'
-		
+		mean_str += '%'		
 		
 		drawer.text((998,int(67/2*rank+7)+header_height),
 			mean_str,font=font,fill=(0,0,0,255))
 	except:
 		drawer.text((998,int(67/2*rank+7)+header_height),
-			str(mean)[:5]+'%',font=font,fill=(0,0,0,255))
+			"%.2f" % round(mean,2)+'%',font=font,fill=(0,0,0,255))
 		
 	drawer.text((1164,int(67/2*rank+7)+header_height),
-		str(standev)[:5]+'%',font=font,fill=(0,0,0,255))
+		"%.2f" % round(standev,2)+'%',font=font,fill=(0,0,0,255))
 		
 	drawer.text((1309-drawer.textsize(str(vote_count),font)[0]/2,
 		int(67/2*rank+7)+header_height),str(vote_count),
