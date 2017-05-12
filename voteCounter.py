@@ -124,6 +124,20 @@ def calc_stats(scoredata):#calculate stats, dm if you want more
 	except:
 		scoredata[6] = 0
 		
+	votegraph = [0 for i in range(10)]
+	for vote in votes:
+		vote_dev = 0
+		if vote % (100/9) > 0.01:
+			vote_dev = 0.5
+			
+		ind = 9-int(9*(vote+0.000001)/100)
+		votegraph[ind]+= 1-vote_dev
+		try:
+			votegraph[ind+1]+= vote_dev
+		except:
+			pass
+			
+	scoredata.append(votegraph)	
 	return scoredata
 		
 def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,header_height,twowers):#this one is a bit of a mess
