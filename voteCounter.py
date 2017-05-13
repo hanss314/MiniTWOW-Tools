@@ -1,5 +1,5 @@
 import ast, argparse, statistics, textwrap, csv, json, os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageColor
 from voteConverter import convert
 from booksonaGen import make_book
 from textTools import wrap_text
@@ -170,7 +170,7 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 		try:#attempt to add booksona
 			booksona = Image.open('./booksonas/'+twower+'.png')
 			booksona.thumbnail((32,32),Image.BICUBIC)
-			base.paste(booksona,(333,int(67/2*i)+header_height),booksona)
+			base.paste(booksona,(330,int(67/2*i)+header_height),booksona)
 		except:
 			pass
 			
@@ -199,27 +199,30 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			
 			
 		if drawer.textsize(twower,font)[0] > 255: #draws twower name
+			twower = wrap_text(twower,255,smallfont,drawer)
 			drawer.text((60,int(67/2*i+7)+header_height),
 				twower,font=smallfont,fill=(0,0,0,255))
 				
 		else:
+			
 			drawer.text((60,int(67/2*i+7)+header_height),
 				twower,font=font,fill=(0,0,0,255))
 				
 		if drawer.textsize(response,font)[0] > 600: #draws responses
-			response = wrap_text(response,600,smallfont,drawer)
+			response = wrap_text(response,500,smallfont,drawer)
 			
 			if response.count('\n') == 0:
-				drawer.text((378,int(67/2*i+8)+header_height),
+				drawer.text((370,int(67/2*i+8)+header_height),
 					response,font=smallfont,fill=(0,0,0,255))
 			else:
-				drawer.text((378,int(67/2*i)+header_height),
+				drawer.text((370,int(67/2*i)+header_height),
 					response,font=smallfont,fill=(0,0,0,255))
 		else:
-			drawer.text((378,int(67/2*i+7)+header_height),
+			drawer.text((370,int(67/2*i+7)+header_height),
 				response,font=font,fill=(0,0,0,255))
 		
 		draw_stats(drawer,twower,subt,standev,boost,vote_count,header_height,i)
+		draw_distr(drawer,scores[i][8],i,header_height)
 		
 				
 		addBackground += 1
@@ -227,24 +230,49 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 	return scores
 	
 def draw_stats(drawer,twower,subt,standev,boost,vote_count,header_height,rank):
+	mean_str = ''
 	if boost == 0:
-		drawer.text((998,int(67/2*rank+7)+header_height),
-			"%.2f" % round(subt,2)+'%',font=font,fill=(0,0,0,255))
-		
+		mean_str = "%.2f" % round(subt,2)+'%'
+	
 	else:
 		mean_str = "%.2f" % round(subt,2)
 		mean_str += '(+{})'.format(boost)
 		mean_str += '%'		
 		
-		drawer.text((998,int(67/2*rank+7)+header_height),
-			mean_str,font=font,fill=(0,0,0,255))
+	width = drawer.textsize(mean_str,font)[0]
+	
+	drawer.text((945-width/2,int(67/2*rank+7)+header_height),
+		mean_str,font=font,fill=(0,0,0,255))
 		
-	drawer.text((1164,int(67/2*rank+7)+header_height),
-		"%.2f" % round(standev,2)+'%',font=font,fill=(0,0,0,255))
+	stdv_str = u'\u03C3 =' + ("%.2f" % round(standev,2))+'%'
+	width = drawer.textsize(stdv_str,smallfont)[0]
 		
-	drawer.text((1309-drawer.textsize(str(vote_count),font)[0]/2,
-		int(67/2*rank+7)+header_height),str(vote_count),
-		font=font,fill=(0,0,0,255))
+	drawer.text((1300-width/2,int(67/2*rank+2)+header_height),
+		stdv_str,font=smallfont,fill=(0,0,0,255))
+		
+	vote_str = str(vote_count)+' votes'
+	width = drawer.textsize(vote_str,smallfont)[0]
+		
+	drawer.text((1300-width/2,int(67/2*rank+17)+header_height),
+		vote_str,font=smallfont,fill=(0,0,0,255))
+
+def draw_distr(drawer,distr,rank,header_height):
+	norm = normalize(distr)
+	bottom = int(67/2*rank)+header_height+32
+	for i in range(10):
+		height = int(28*norm[i])
+		left = 1025+20*i
+		color = (int(255*i/9),int(255*(9-i)/9),0)
+		drawer.rectangle([left,bottom,left+20,bottom-height],fill=color)
+		
+		
+		
+	
+def normalize(values):
+	divisor = max(values)
+	new_list = [i/divisor for i in values]
+	return new_list
+	
 		
 def mergeSort(alist):
     if len(alist)>1:
