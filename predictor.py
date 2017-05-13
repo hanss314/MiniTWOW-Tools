@@ -51,9 +51,10 @@ def collect_data(latest):
 
 	return data
 
-def calculate_results(data,death_rate):
+def calculate_results(data,death_rate,path):
+	iterations = 10000
 	count = len(data)
-	results = [[0,0,0] for i in range(count)]
+	results = [[0 for i in range(count)]for j in range(3)]
 
 	live = [count]
 	while not live[-1] == 1:
@@ -66,7 +67,7 @@ def calculate_results(data,death_rate):
 		live.append(to_append)
 	#each array value corresponds to the amount of survivors after each round
 
-	for length in range(100):
+	for length in range(iterations):
 		dead = [False for i in range(count)]
 		top = 0
 		for round in range(len(live)):
@@ -94,23 +95,31 @@ def calculate_results(data,death_rate):
 				top = 1
 				for ten in range(count)	:
 					if not dead[ten]:
-						results[ten][0]+=1
+						results[0][ten]+=1
 
 			elif(live[round]<=3 and top == 1):
 				top = 2
 				
 				for three in range(count):
 					if not dead[three]:
-						results[three][1]+=1
+						results[1][three]+=1
 
 			elif(live[round]==1):
 				for win in range(count):
 					if not dead[win]:
-						results[win][2]+=1
+						results[2][win]+=1
 
-
-	for prin in range(count):
-		print('{}\t{}\t{}\t{}'.format(data[prin][0], results[prin][0], results[prin][1], results[prin][2]))
+	with open('./twows/{}/predictions.csv'.format(path), 'w') as result_file:
+	
+		writer = csv.writer(result_file,lineterminator='\n')
+		writer.writerow(['Twower','Top 10','Top 3','Wisdom'])
+		writer.writerow([])
+		for prin in range(count):
+			name = data[prin][0]
+			top_10 = str(results[0][prin]*100/iterations)+'%'
+			top_3 = str(results[1][prin]*100/iterations)+'%'
+			winner = str(results[2][prin]*100/iterations)+'%'
+			writer.writerow([name,top_10,top_3,winner])
 
 if __name__ == '__main__':
 	death_rate = 0
@@ -125,4 +134,4 @@ if __name__ == '__main__':
 		print('death rate can\'t be greater than 100!')
 	else:
 		data = collect_data(sys.argv[1])
-		calculate_results(data,death_rate)
+		calculate_results(data,death_rate,sys.argv[1])
