@@ -14,7 +14,7 @@ def parse_args(keylist):
 	its=int(args.iterations)
 	
 	submissions = []
-	with open('./{}/responses.csv'.format(path),'r') as csvfile:#read responses
+	with open('./twows/{}/responses.csv'.format(path),'r') as csvfile:#read responses
 		reader = csv.reader(csvfile,delimiter=',', quotechar='"')
 		for row in reader:
 			submissions.append(row[1])
@@ -52,7 +52,7 @@ def count_words(text):
 def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions):
 	screenDict = {}
 	voteNumber = 0
-	text_writer = open('./'+path+'/ballots.txt','w')
+	text_writer = open('./twows/{}/ballots.txt'.format(path),'w')
 	for iteration in range(its):
 
 		base = Image.open('./resources/base.png').convert('RGB')
@@ -92,10 +92,10 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
 			voteNumber+=1
 			
 		screenDict[word]=list(existingEntries)
-		base.save('./'+path+'/voteScreens/'+str(iteration)+'.png')
+		base.save('./twows/{}/voteScreens/{}.png'.format(path,iteration))
 		text_writer.write('\n\n\n\n\n')
 		
-	open('./'+path+'/dict.json','w').write(json.dumps(screenDict))
+	open('./twows/{}/dict.json'.format(path),'w').write(json.dumps(screenDict))
 	
 	
 def main():
@@ -103,7 +103,7 @@ def main():
 	path,its,submissions,keyorder,submissionCount = parse_args(keylist)
 	voteList = create_random_order(submissions,its,submissionCount)
 
-	os.makedirs('./'+path+'/voteScreens', exist_ok=True)
+	os.makedirs('./twows/{}/voteScreens'.format(path), exist_ok=True)
 
 	draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
 	

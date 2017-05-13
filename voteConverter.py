@@ -2,12 +2,12 @@ import json, sys, csv
 
 def convert(path):
 
-	keywords = json.load(open('./{}/dict.json'.format(path),'r'))
+	keywords = json.load(open('./twows/{}/dict.json'.format(path),'r'))
 	vote_strings={}
 	votes = []
 	final_votes = []
 		
-	with open('./{}/votes.csv'.format(path),'r') as csvfile:
+	with open('./twows/{}/votes.csv'.format(path),'r') as csvfile:
 		reader = csv.reader(csvfile)
 		for row in reader:
 			try:
@@ -68,4 +68,4 @@ def remove_dups(seq):
 if __name__ == '__main__':
 	votes = convert(sys.argv[1])
 	print(votes)
-	open('./{}/votes.json'.format(sys.argv[1]),'w').write(json.dumps(votes))
+	open('./twows/{}/votes.json'.format(sys.argv[1]),'w').write(json.dumps(votes))

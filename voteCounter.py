@@ -155,8 +155,11 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
 			elif backgroundCol==2:
 				base.paste(Image.open('./resources/eliminated.png'),(0,int(67/2*i)+header_height))
 		
-		if not os.path.isfile('./booksonas/'+twower+'.png'):
-			make_book(twower,'./booksonas/')
+		try:
+			if not os.path.isfile('./booksonas/'+twower+'.png'):
+				make_book(twower,'./booksonas/')
+		except:
+			pass
 		
 		try:#attempt to add booksona
 			booksona = Image.open('./booksonas/'+twower+'.png')
@@ -305,7 +308,7 @@ def main():
 	scores = draw_rankings(scores,top_number,elim_number,twower_count,base,drawer,header_height,twowers)
 	write_csv(scores,path)
 	
-	base.save('./{}/results.png'.format(path))
+	base.save('./twows/{}/results.png'.format(path))
 
 
 if __name__=='__main__':
