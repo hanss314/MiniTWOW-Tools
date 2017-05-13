@@ -26,12 +26,12 @@ def parse_args():
 	with open('./{}/responses.csv'.format(path),'r') as csvfile:#read responses
 		reader = csv.reader(csvfile)
 		for row in reader:
-			#scoredata format [twower, response, votes/mean, count, boost, final, stdev]
+			#scoredata format [twower, response, votes/mean, count, boost, final, stdev, votegraph]
 			twowers.add(row[0])
 			try:
-				scores.append([row[0],row[1],[],0,int(row[2]),0,0,0])
+				scores.append([row[0],row[1],[],0,int(row[2]),0,0,0,[0 for i in range(10)]])
 			except:
-				scores.append([row[0],row[1],[],0,0,0,0,0])
+				scores.append([row[0],row[1],[],0,0,0,0,0,[0 for i in range(10)]])
 	
 	twowers = list(twowers)
 	twower_count = len(twowers)
@@ -65,12 +65,17 @@ def process_votes(votes, scores, path):
 		
 		for vote in user_vote:
 			percentage = 100.0
+			placing = 0
 			for resp_num in vote[:-1]:
 				scores[resp_num][2].append(percentage*count)
 				scores[resp_num][3] += count
+				scores[resp_num][8][placing] += 1
+				
 				percentage -= 100/9
-				if percentage < 0:
+				placing += 1
+				if percentage < 0:#screw floating point numbers
 					percentage = 0
+				
 				
 				
 			try:			
@@ -123,21 +128,7 @@ def calc_stats(scoredata):#calculate stats, dm if you want more
 		scoredata[6] = statistics.stdev(votes)
 	except:
 		scoredata[6] = 0
-		
-	votegraph = [0 for i in range(10)]
-	for vote in votes:
-		vote_dev = 0
-		if vote % (100/9) > 0.01:
-			vote_dev = 0.5
 			
-		ind = 9-int(9*(vote+0.000001)/100)
-		votegraph[ind]+= 1-vote_dev
-		try:
-			votegraph[ind+1]+= vote_dev
-		except:
-			pass
-			
-	scoredata.append(votegraph)	
 	return scoredata
 		
 def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,header_height,twowers):#this one is a bit of a mess
@@ -266,8 +257,6 @@ def draw_distr(drawer,distr,rank,header_height):
 		drawer.rectangle([left,bottom,left+20,bottom-height],fill=color)
 		
 		
-		
-	
 def normalize(values):
 	divisor = max(values)
 	new_list = [i/divisor for i in values]
