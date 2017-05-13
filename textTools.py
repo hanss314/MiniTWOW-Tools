@@ -1,3 +1,5 @@
+import re
+
 def wrap_text(text,width,font,drawer):
 	
 	text_list = [text]
@@ -36,3 +38,7 @@ def get_nearest_space(text,width,font,drawer):
 		char_num -= 1
 		
 	return guess
+	
+def simplify(text):
+	text = re.sub('[^a-zA-Z0-9 ]','',text)
+	return text

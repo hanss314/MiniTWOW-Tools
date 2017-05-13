@@ -2,7 +2,7 @@ import ast, argparse, statistics, textwrap, csv, json, os
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 from voteConverter import convert
 from booksonaGen import make_book
-from textTools import wrap_text
+from textTools import wrap_text, simplify
 
 
 #fonts, change if needed
@@ -27,11 +27,12 @@ def parse_args():
 		reader = csv.reader(csvfile)
 		for row in reader:
 			#scoredata format [twower, response, votes/mean, count, boost, final, stdev, votegraph]
-			twowers.add(row[0])
+			name = simplify(row[0])
+			twowers.add(name)
 			try:
-				scores.append([row[0],row[1],[],0,int(row[2]),0,0,0,[0 for i in range(10)]])
+				scores.append([name,row[1],[],0,int(row[2]),0,0,0,[0 for i in range(10)]])
 			except:
-				scores.append([row[0],row[1],[],0,0,0,0,0,[0 for i in range(10)]])
+				scores.append([name,row[1],[],0,0,0,0,0,[0 for i in range(10)]])
 	
 	twowers = list(twowers)
 	twower_count = len(twowers)
