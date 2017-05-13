@@ -249,13 +249,12 @@ def draw_stats(drawer,twower,subt,standev,boost,vote_count,header_height,rank):
 
 def draw_distr(drawer,distr,rank,header_height):
 	norm = normalize(distr)
-	bottom = int(67/2*rank)+header_height+32
+	bottom = int(67/2*rank)+header_height+31
 	for i in range(10):
 		height = int(28*norm[i])
 		left = 1025+20*i
 		color = (int(255*i/9),int(255*(9-i)/9),0)
-		drawer.rectangle([left,bottom,left+20,bottom-height],fill=color)
-		
+		drawer.rectangle([left,bottom,left+19,bottom-height],fill=color)
 		
 def normalize(values):
 	divisor = max(values)
