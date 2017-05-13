@@ -19,11 +19,11 @@ def parse_args():
 	path = args.input
 	
 	votes = convert(path)
-	prompt = open('./{}/prompt.txt'.format(path),'r').read().split('\n')[0]
+	prompt = open('./twows/{}/prompt.txt'.format(path),'r').read().split('\n')[0]
 	scores = []
 	twowers=set()
 	
-	with open('./{}/responses.csv'.format(path),'r') as csvfile:#read responses
+	with open('./twows/{}/responses.csv'.format(path),'r') as csvfile:#read responses
 		reader = csv.reader(csvfile)
 		for row in reader:
 			#scoredata format [twower, response, votes/mean, count, boost, final, stdev, votegraph]
@@ -99,7 +99,7 @@ def process_votes(votes, scores, path):
 	return scores
 	
 def write_csv(scores, path):
-	with open('./{}/results.csv'.format(path), 'w') as result_file:
+	with open('./twows/{}/results.csv'.format(path), 'w') as result_file:
 	
 		writer = csv.writer(result_file,lineterminator='\n')
 		writer.writerow(['Twower','Response','Subtotal','Boost','Total','Standard Deviation','Votes'])
