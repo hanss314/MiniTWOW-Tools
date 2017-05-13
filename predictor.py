@@ -1,71 +1,121 @@
-import random;	
+import random, sys, csv, statistics
 
-data = []	
+def collect_data(latest):
+	data = []
+	means = {}
+	stdvs = {}
+	to_collect = []
+	start_collecting = False
 
-void setup() {
-	calculateResults(data);					
-}						
-void calculateResults(String data[][]){						
-	Random r = new Random();					
-	int[][] results = new int[14][3];					
-	for(int ini=0; ini<14; ini++){					
-		for(int tia=0; tia<3; tia++){				
-			results[ini][tia] = 0;			
-		}				
-	}
-	// 14 is simply the amount of competitors remaining					
-	int[] live = new int[10];					
-	live[0] = 10;					
-	//omitted 1 to 8
-	live[9] = 1;
-	// for lack of better methods, each array value corresponds to the amount of survivors after each round
-	for(int length = 0; length<100; length++){					
-		boolean[] dead = new boolean[12];				
-		for(int round = 0; round<10; round++){					
-			float[] scores = new float[12];			
-			for(int sim = 0; sim<12; sim++){			
-				if(dead[sim]){		
-					scores[sim] = 0;	
-				} else {		
-					scores[sim] = (float)(r.nextGaussian()*Float.valueOf(data[sim][2])+Float.valueOf(data[sim][1]));					
-				}		
-			}			
-			for(int i = 0; i<12; i++){			
-				int rank = 1;		
-				for(int j = 0; j<12; j++){		
-					if(scores[i] < scores[j]){	
-						rank++;
-					}	
-				}		
-				if(rank>live[round]){		
-					dead[i] = true;	
-				}		
-			}
-			//the values for round are simply the values for which 10, 3, and 1 people would stay alive			
-			if(round==0){			
-				for(int ten = 0; ten<12; ten++){		
-					if(!dead[ten]){	
-						results[ten][0]+=1;
-					}	
-				}		
-			} else if(round==7){			
-				for(int three = 0; three<12; three++){		
-					if(!dead[three]){	
-						results[three][1]+=1;
-					}	
-				}		
-			} else if(round==9){			
-				for(int win = 0; win<12; win++){		
-					if(!dead[win]){	
-						results[win][2]+=1;
-					}	
-				}		
-			}			
-		}				
-	}					
-	for(int prin=0;prin<12;prin++){					
-		println(data[prin][0] + "\t" + results[prin][0] + "\t" + results[prin][1] + "\t" + results[prin][2]);				
-	}					
-}						
+	for twow in open('history.txt','r').read().split('\n'):
+		if twow == latest:
+			start_collecting = True
+		if start_collecting:
+			to_collect.append('./twows/'+twow)
+
+	latest_twow = to_collect[0]
+
+	with open('./{}/results.csv'.format(latest_twow),'r') as csvfile:#read responses
+		reader = csv.reader(csvfile)
+		row_num = 0
+		for row in reader:
+			if row_num< 2:
+				row_num += 1
+				continue
+			means[row[0]] = [float(row[2])]
+			stdvs[row[0]] = [float(row[5])]
+
+	for twow in to_collect[1:]:
+		with open('./{}/results.csv'.format(twow),'r') as csvfile:#read responses
+			reader = csv.reader(csvfile)
+			next(reader, None)
+			next(reader, None)
+			for row in reader:
+				try:
+					means[row[0]].append(float(row[2]))
+					stdvs[row[0]].append(float(row[5]))
+				except:
+					pass
+
+	for twower in means.keys():
+		mean = statistics.mean(means[twower])
+		stdv = statistics.mean(stdvs[twower])
+		data.append([twower,mean,stdv])
+
+	return data
+
+def calculate_results(data,death_rate):
+	count = len(data)
+	results = [[0,0,0] for i in range(count)]
+
+	live = [count]
+	while not live[-1] == 1:
+		to_append = 0
+		if death_rate > 0:
+			to_append = max(1,int(live[-1]*(100-death_rate)/100))
+		elif death_rate < 0:
+			to_append = max(1,int(live[-1]+death_rate))
+
+		live.append(to_append)
+	#each array value corresponds to the amount of survivors after each round
+
+	for length in range(100):
+		dead = [False for i in range(count)]
+		top = 0
+		for round in range(len(live)):
+			scores = [0.0 for i in range(count)]
+			for sim in range(count):
+				if dead[sim]:
+					scores[sim] = 0
+				else:
+					scores[sim] = random.gauss(data[sim][1],data[sim][2])
+
+
+			for i in range(count):
+				rank = 1
+				for j in range(count):
+					if scores[i] < scores[j]:
+						rank += 1
+
+				if rank>live[round]:
+					dead[i] = True
+
+
+			#the values for round are simply the values for which 10, 3, and 1 people would stay alive
 			
-	# arrays in which the first element is the name as a string, the second the average, and the third the standard deviation
+			if(live[round]<=10 and top == 0):
+				top = 1
+				for ten in range(count)	:
+					if not dead[ten]:
+						results[ten][0]+=1
+
+			elif(live[round]<=3 and top == 1):
+				top = 2
+				
+				for three in range(count):
+					if not dead[three]:
+						results[three][1]+=1
+
+			elif(live[round]==1):
+				for win in range(count):
+					if not dead[win]:
+						results[win][2]+=1
+
+
+	for prin in range(count):
+		print('{}\t{}\t{}\t{}'.format(data[prin][0], results[prin][0], results[prin][1], results[prin][2]))
+
+if __name__ == '__main__':
+	death_rate = 0
+	try:
+		death_rate = sys.argv[2]
+	except:
+		death_rate = -1
+
+	if death_rate == 0:
+		print('death rate can\'t be 0!')
+	elif death_rate >100:
+		print('death rate can\'t be greater than 100!')
+	else:
+		data = collect_data(sys.argv[1])
+		calculate_results(data,death_rate)
