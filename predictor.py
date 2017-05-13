@@ -1,4 +1,7 @@
-import random, sys, csv, statistics
+import random, sys, csv, statistics, re
+
+def strip_drp(name):
+	return re.sub('\[.*?\]', '', name)
 
 def collect_data(latest):
 	data = []
@@ -17,13 +20,16 @@ def collect_data(latest):
 
 	with open('./{}/results.csv'.format(latest_twow),'r') as csvfile:#read responses
 		reader = csv.reader(csvfile)
-		row_num = 0
+		next(reader, None)
+		next(reader, None)
 		for row in reader:
-			if row_num< 2:
-				row_num += 1
-				continue
-			means[row[0]] = [float(row[2])]
-			stdvs[row[0]] = [float(row[5])]
+			name = strip_drp(row[0])
+			try:
+				means[name].append(float(row[2]))
+				stdvs[name].append(float(row[5]))
+			except:
+				means[name] = [float(row[2])]
+				stdvs[name] = [float(row[5])]
 
 	for twow in to_collect[1:]:
 		with open('./{}/results.csv'.format(twow),'r') as csvfile:#read responses
@@ -31,9 +37,10 @@ def collect_data(latest):
 			next(reader, None)
 			next(reader, None)
 			for row in reader:
+				name = strip_drp(row[0])
 				try:
-					means[row[0]].append(float(row[2]))
-					stdvs[row[0]].append(float(row[5]))
+					means[name].append(float(row[2]))
+					stdvs[name].append(float(row[5]))
 				except:
 					pass
 
