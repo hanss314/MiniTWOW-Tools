@@ -40,5 +40,7 @@ def get_nearest_space(text,width,font,drawer):
 	return guess
 	
 def simplify(text):
-	text = re.sub('[^a-zA-Z0-9 ]','',text)
+	text = text.strip()
+	text = re.sub('[^a-zA-Z0-9\(\)\[\]\{\}; ]','',text)
+	
 	return text

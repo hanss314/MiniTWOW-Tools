@@ -52,7 +52,7 @@ def collect_data(latest):
 	return data
 
 def calculate_results(data,death_rate,path):
-	iterations = 10000
+	iterations = 100000
 	count = len(data)
 	results = [[0 for i in range(count)]for j in range(3)]
 
