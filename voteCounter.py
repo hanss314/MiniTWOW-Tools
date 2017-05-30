@@ -62,7 +62,9 @@ def draw_header(prompt, base, drawer,scores):
 def process_votes(votes, scores, path):	
 
 	for user_vote in votes:#maps votes to responses
-		count = 1/len(user_vote)
+		count = 1
+		if len(user_vote)>1:
+			count = 2/len(user_vote)
 		
 		for vote in user_vote:
 			percentage = 100.0
@@ -76,10 +78,8 @@ def process_votes(votes, scores, path):
 				placing += 1
 				if percentage < 0:#screw floating point numbers
 					percentage = 0
-				
-				
-				
-			try:			
+
+			try:
 				
 				unvtd = len(vote[-1])-1
 				percentage_left = 50*unvtd/9
@@ -87,7 +87,7 @@ def process_votes(votes, scores, path):
 				for unvoted in vote[-1]:
 					scores[unvoted][2].append(-percentage_left)#negative as a flag so it doesn't count as a vote
 					scores[unvoted][3] += count
-								
+
 			except Exception:
 				pass
 			
