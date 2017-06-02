@@ -100,7 +100,7 @@ def process_votes(votes, scores, path):
     return scores
     
 def write_csv(scores, path):
-    with open('./twows/{}/results.csv'.format(path), 'w') as result_file:
+    with open('./twows/{}/results.csv'.format(path), 'w',encoding="ISO-8859-15") as result_file:
     
         writer = csv.writer(result_file,lineterminator='\n')
         writer.writerow(['Twower','Response','Subtotal','Boost','Total','Standard Deviation','Votes'])
