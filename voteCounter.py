@@ -195,15 +195,15 @@ def draw_rankings(scores, top_number, elim_number,twower_count,base,drawer,heade
             
         if drawer.textsize(twower,font)[0] > 255: #draws twower name
             twower = wrap_text(twower,255,smallfont,drawer)
-            drawer.text((60,int(67/2*i+7)+header_height),
+            drawer.text((70,int(67/2*i+7)+header_height),
                 twower,font=smallfont,fill=(0,0,0,255))
                 
         else:
             
-            drawer.text((60,int(67/2*i+7)+header_height),
+            drawer.text((70,int(67/2*i+7)+header_height),
                 twower,font=font,fill=(0,0,0,255))
                 
-        if drawer.textsize(response,font)[0] > 600: #draws responses
+        if drawer.textsize(response,font)[0] > 500: #draws responses
             response = wrap_text(response,500,smallfont,drawer)
             
             if response.count('\n') == 0:
