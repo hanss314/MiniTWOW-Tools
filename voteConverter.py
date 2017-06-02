@@ -56,7 +56,6 @@ def convert(path):
                 
             final_vote.append(order)
         final_votes.append(final_vote)
-    print(final_votes)
     return final_votes
     
 def remove_dups(seq):
