@@ -4,7 +4,7 @@ from voteConverter import convert
 from booksonaGen import make_book
 from textTools import wrap_text, simplify
 
-
+encoding = "ISO-8859-15" #change if needed
 #fonts, change if needed
 font = ImageFont.truetype('./resources/arial.ttf',20)
 bigfont =  ImageFont.truetype('./resources/arial.ttf',30)
@@ -23,7 +23,7 @@ def parse_args():
     scores = []
     twowers=set()
     
-    with open('./twows/{}/responses.csv'.format(path),'r',encoding="ISO-8859-15") as csvfile:#read responses
+    with open('./twows/{}/responses.csv'.format(path),'r',encoding=encoding) as csvfile:#read responses
         reader = csv.reader(csvfile)
         for row in reader:
             #scoredata format [twower, response, votes/mean, count, boost, final, stdev, votegraph]
@@ -100,7 +100,7 @@ def process_votes(votes, scores, path):
     return scores
     
 def write_csv(scores, path):
-    with open('./twows/{}/results.csv'.format(path), 'w',encoding="ISO-8859-15") as result_file:
+    with open('./twows/{}/results.csv'.format(path), 'w',encoding=encoding) as result_file:
     
         writer = csv.writer(result_file,lineterminator='\n')
         writer.writerow(['Twower','Response','Subtotal','Boost','Total','Standard Deviation','Votes'])
@@ -267,6 +267,17 @@ def normalize(values):
     except:
         return values
     return new_list
+
+def grthn(bigger, smaller):
+    if abs(bigger[5]-smaller[5])<0.0001:#floating point issues
+        big_norm = normalize(bigger[-1])
+        small_norm = normalize(smaller[-1])
+        for i in range(10):
+            if not abs(big_norm[i]-small_norm[i])<0.0001:
+                return big_norm[i]>small_norm[i]
+        return False
+    else:
+        return bigger[5]>smaller[5]
     
         
 def mergeSort(alist):
@@ -282,7 +293,7 @@ def mergeSort(alist):
         j=0
         k=0
         while i < len(lefthalf) and j < len(righthalf):
-            if lefthalf[i][5] > righthalf[j][5]:
+            if grthn(lefthalf[i],righthalf[j]):
                 alist[k]=lefthalf[i]
                 i=i+1
             else:
