@@ -31,12 +31,19 @@ def main():
         writer.writerow(['Word','Count'])
         writer.writerow([])
         for word, count in counts.items():
-            print([word,count])
             writer.writerow([word,count])
             
 def simplify(text):
     text = text.strip()
     text = re.sub('[^a-zA-Z0-9\']','',text)
+    try:
+        if text[0] == '\'':
+            text=text[1:]
+        if text[-1] == '\'':
+            text=text[:-1]
+    except:
+        pass
+    
     return text.lower()
 
 main()
