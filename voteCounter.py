@@ -4,7 +4,7 @@ from voteConverter import convert
 from booksonaGen import make_book
 from textTools import wrap_text, simplify
 
-encoding = "ISO-8859-15" #change if needed
+encoding = "ISO-8859-15" 
 #fonts, change if needed
 font = ImageFont.truetype('./resources/arial.ttf',20)
 bigfont =  ImageFont.truetype('./resources/arial.ttf',30)
