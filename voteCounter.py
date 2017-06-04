@@ -4,11 +4,13 @@ from voteConverter import convert
 from booksonaGen import make_book
 from textTools import wrap_text, simplify
 
+#change this stuff if needed
+font_path='./resources/arial.ttf'
 encoding = "ISO-8859-15" 
-#fonts, change if needed
-font = ImageFont.truetype('./resources/arial.ttf',20)
-bigfont =  ImageFont.truetype('./resources/arial.ttf',30)
-smallfont = ImageFont.truetype('./resources/arial.ttf',13)
+
+font = ImageFont.truetype(font_path,20)
+bigfont =  ImageFont.truetype(font_path,30)
+smallfont = ImageFont.truetype(font_path,13)
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -30,9 +32,9 @@ def parse_args():
             name = simplify(row[0])
             twowers.add(name)
             try:
-                scores.append([name,row[1],[],0,int(row[2]),0,0,0,[0 for i in range(10)]])
+                scores.append([name,row[1],[],0,int(row[2]),0,0,0,[0 for i in range(10)],[]])
             except:
-                scores.append([name,row[1],[],0,0,0,0,0,[0 for i in range(10)]])
+                scores.append([name,row[1],[],0,0,0,0,0,[0 for i in range(10)],[]])
     
     twowers = list(twowers)
     twower_count = len(twowers)
@@ -73,6 +75,7 @@ def process_votes(votes, scores, path):
                 scores[resp_num][2].append(percentage*count)
                 scores[resp_num][3] += count
                 scores[resp_num][8][placing] += 1
+                scores[resp_num][9].append(percentage)
                 
                 percentage -= 100/9
                 placing += 1
@@ -126,7 +129,7 @@ def calc_stats(scoredata):#calculate stats, dm if you want more
     scoredata[5] = scoredata[2]    + scoredata[4]
         
     try:
-        scoredata[6] = statistics.stdev(votes)
+        scoredata[6] = statistics.stdev(scoredata[9])
     except:
         scoredata[6] = 0
             
@@ -270,12 +273,9 @@ def normalize(values):
 
 def grthn(bigger, smaller):
     if abs(bigger[5]-smaller[5])<0.0001:#floating point issues
-        big_norm = normalize(bigger[-1])
-        small_norm = normalize(smaller[-1])
-        for i in range(10):
-            if not abs(big_norm[i]-small_norm[i])<0.0001:
-                return big_norm[i]>small_norm[i]
-        return False
+        big_norm = normalize(bigger[8])
+        small_norm = normalize(smaller[8])
+        return big_norm>small_norm
     else:
         return bigger[5]>smaller[5]
     
