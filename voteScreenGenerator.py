@@ -75,7 +75,7 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
                 submissionNumber = voteList[int(voteNumber/submissionCount)][voteNumber%submissionCount]
                 
             response = wrap_text(submissions[submissionNumber],1100,font,drawer)
-            drawer.text((100,71*i+60-drawer.textsize(response,font)[1]/2), response, font=font, fill=(0,0,0))
+            drawer.text((100,70.875*i+60-drawer.textsize(response,font)[1]/2), response, font=font, fill=(0,0,0))
             distance = 130+drawer.textsize(response,font)[0]
             
             wordCount = count_words(response)
