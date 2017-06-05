@@ -1,4 +1,4 @@
-import random, argparse, re, os, textwrap, json, csv
+import random, argparse, os, textwrap, json, csv
 from PIL import Image, ImageDraw, ImageFont
 from textTools import wrap_text
 
@@ -41,12 +41,8 @@ def create_random_order(submissions,its,submissionCount):
     return new_text'''
     
 def count_words(text):
-    indivWords = re.sub('/[^a-zA-Z0-9 ]/','',text).split(' ')#removes non alphanumeric and space
-    count = 0
-    for word in indivWords:
-        if re.search('[a-zA-Z0-9]',word):#if "word" is not completely spaces
-            count +=1
-    return count
+    
+    return text.strip().count(' ')+1
             
 
 def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions):
