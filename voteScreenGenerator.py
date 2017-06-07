@@ -1,6 +1,6 @@
 import random, argparse, os, textwrap, json, csv
 from PIL import Image, ImageDraw, ImageFont
-from textTools import wrap_text
+from utils.textTools import wrap_text
 
 #font change if needed
 font = ImageFont.truetype('./resources/arial.ttf',30)

@@ -1,22 +1,26 @@
-import ast, argparse, statistics, textwrap, csv, json, os
+import ast, argparse, statistics, textwrap, csv, json, os, time
 from PIL import Image, ImageDraw, ImageFont, ImageColor
-from voteConverter import convert
-from booksonaGen import make_book
-from textTools import wrap_text, simplify
+from utils.voteConverter import convert
+from utils.booksonaGen import make_book
+from utils.textTools import wrap_text, simplify
 
 #change this stuff if needed
 font_path='./resources/arial.ttf'
 encoding = "ISO-8859-15" 
 
-font = ImageFont.truetype(font_path,20)
+font = ImageFont.truetype(font_path,13)
 bigfont =  ImageFont.truetype(font_path,30)
 smallfont = ImageFont.truetype(font_path,13)
 
+should_draw=True
+
 def parse_args():
+    global should_draw
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
-    parser.add_argument("-e", "--perc_elim", nargs='?', const=5, default=5)
-    parser.add_argument("-t", "--num_gold", nargs='?', const=5, default=5)
+    parser.add_argument("-e", "--perc_elim", nargs='?', type=int, const=-1, default=20, help='Percentage of contestants eliminated, set to negative number to specify number of contestants')
+    parser.add_argument("-t", "--num_gold", nargs='?', type=int, const=5, default=1, help='Number of contestants to place in gold highlighting')
+    parser.add_argument('-i', '--omit_image', action='store_false', help='Use this flag to not draw image')
     args = parser.parse_args()
     path = args.input
     
@@ -38,14 +42,14 @@ def parse_args():
     
     twowers = list(twowers)
     twower_count = len(twowers)
-    
-    top_number = int(args.num_gold) #chart coloring ranges
+    should_draw=args.omit_image
+    top_number = args.num_gold #chart coloring ranges
     elim_number=0
     
     if int(args.perc_elim) < 0:
-        elim_number = -int(args.perc_elim)
+        elim_number = -args.perc_elim
     else:
-        elim_number = round(int(args.perc_elim)*len(twowers)/100)
+        elim_number = round(args.perc_elim*len(twowers)/100)
     
     return (path, prompt, scores, votes, twowers, twower_count, top_number, elim_number)
         
@@ -104,18 +108,18 @@ def process_votes(votes, scores, path):
     
 def write_csv(scores, path):
     with open('./twows/{}/results.csv'.format(path), 'w',encoding=encoding) as result_file:
-    
         writer = csv.writer(result_file,lineterminator='\n')
-        writer.writerow(['Twower','Response','Subtotal','Boost','Total','Standard Deviation','Votes'])
+        writer.writerow(['Twower','Response','Subtotal','Boost','Total','Standard Deviation','Votes','Distribution'])
         writer.writerow([])
         for scoredata in scores:
-            writer.writerow(scoredata[0:3]+scoredata[4:8])
+            writer.writerow(scoredata[0:3]+scoredata[4:8]+[scoredata[-1]])
     
 def calc_stats(scoredata):#calculate stats, dm if you want more
     
     scoredata[7]=len([vote for vote in scoredata[2] if vote >=0])
     #print(scoredata[2])
     votes = list(abs(vote) for vote in scoredata[2])
+    scoredata.append(votes)
     try:
         scoredata[2] = sum(votes)/scoredata[3]
         '''
@@ -310,20 +314,45 @@ def mergeSort(alist):
             alist[k]=righthalf[j]
             j=j+1
             k=k+1
+            
+def write_history(path):
+    history = ['']
+    try:
+        with open('history.txt','r+') as hist:
+            history = hist.read().split('\n')
+        history=[x for x in history if x!='']
+    except:
+        history=['']
+    if path!=history[-1]:
+        with open('history.txt','a+') as hist:
+            hist.write(path+'\n')    
     
 def main():
+    global should_draw
+    start = time.time()
+    print('Gathering Data')
     path, prompt, scores, votes, twowers, twower_count, top_number, elim_number = parse_args()
     
-    
-    base = Image.new('RGBA',(1368,1368),color=(255,255,255))
-    drawer = ImageDraw.Draw(base)
-
-    prompt, base, drawer, header_height = draw_header(prompt, base, drawer,scores)
+    print('Processing Scores')
     scores = process_votes(votes, scores, path)
-    scores = draw_rankings(scores,top_number,elim_number,twower_count,base,drawer,header_height,twowers)
-    write_csv(scores,path)
     
-    base.save('./twows/{}/results.png'.format(path))
+    if should_draw:
+        print('Drawing Image')
+        base = Image.new('RGBA',(1368,1368),color=(255,255,255))
+        drawer = ImageDraw.Draw(base)
+        prompt, base, drawer, header_height = draw_header(prompt, base, drawer,scores)
+        scores = draw_rankings(scores,top_number,elim_number,twower_count,base,drawer,header_height,twowers)
+        base.save('./twows/{}/results.png'.format(path))
+    
+    print('Recording Data')
+    write_csv(scores,path)
+    write_history(path)
+    end = time.time()
+    
+    print('Time taken {} seconds'.format(end-start))
+    
+    
+    
 
 
 if __name__=='__main__':
