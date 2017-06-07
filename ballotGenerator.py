@@ -1,10 +1,13 @@
-import random, argparse, os, textwrap, json, csv
+import random, argparse, os, textwrap, json, csv, configparser
 from PIL import Image, ImageDraw, ImageFont
 from utils.textTools import wrap_text
 
-#font change if needed
-font = ImageFont.truetype('./resources/arial.ttf',30)
-encoding = 'ISO-8859-15'
+config = configparser.ConfigParser()
+config.read('config.ini')
+encoding = config['DEFAULT']['encoding']
+font_path = config['DEFAULT']['font']
+    
+font = ImageFont.truetype(font_path,30)
 
 preserve=True
 def parse_args(keylist):
@@ -63,7 +66,6 @@ def draw_screens(keylist,path,its,voteList,submissionCount,submissions):
         except:
             screenDict = {}
     top = len(screenDict)
-    print(screenDict)
         
     voteNumber = 0
     text_writer = open('./twows/{}/ballots.txt'.format(path),'w')

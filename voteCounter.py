@@ -1,12 +1,13 @@
-import ast, argparse, statistics, textwrap, csv, json, os, time
+import ast, argparse, statistics, textwrap, csv, json, os, time, configparser
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 from utils.voteConverter import convert
 from utils.booksonaGen import make_book
 from utils.textTools import wrap_text, simplify
 
-#change this stuff if needed
-font_path='./resources/arial.ttf'
-encoding = "ISO-8859-15" 
+config = configparser.ConfigParser()
+config.read('config.ini')
+encoding = config['DEFAULT']['Encoding']
+font_path = config['DEFAULT']['Font']
 
 font = ImageFont.truetype(font_path,13)
 bigfont =  ImageFont.truetype(font_path,30)

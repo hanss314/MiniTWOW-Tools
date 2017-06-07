@@ -1,7 +1,9 @@
-import sys, csv, re
+import sys, csv, re, configparser
 from collections import OrderedDict
 
-encoding = "ISO-8859-15" 
+config = configparser.ConfigParser()
+config.read('config.ini')
+encoding = config['DEFAULT']['encoding']
 
 def main():
     path = sys.argv[1]

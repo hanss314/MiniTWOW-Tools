@@ -1,6 +1,8 @@
-import random, sys, csv, statistics, re, ast
+import random, sys, csv, statistics, re, ast, configparser
 
-encoding = 'ISO-8859-15'
+config = configparser.ConfigParser()
+config.read('config.ini')
+encoding = config['DEFAULT']['encoding']
 
 def strip_drp(name):
     return re.sub('\[.*?\]', '', name)
