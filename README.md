@@ -4,6 +4,7 @@ Some python scripts for minitwow voting and response management
 Vote predictor by some_nerd(the pi guy)
 
 ## Usage
+#### Current documentation incomplete use -h flag on some of them for help
 
 ### Voting Slide Generator
 
