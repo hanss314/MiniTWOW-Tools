@@ -4,49 +4,67 @@ from utils.textTools import wrap_text
 
 #font change if needed
 font = ImageFont.truetype('./resources/arial.ttf',30)
+encoding = 'ISO-8859-15'
 
+preserve=True
 def parse_args(keylist):
+    global preserve
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
-    parser.add_argument("-i", "--iterations", nargs='?', const=10, default=10)
+    parser.add_argument("-i", "--iterations", nargs='?', type=int, const=20, default=10, help='number of voting screens')
+    parser.add_argument("-r", "--responses_to_use", nargs='+', default=[], type=int, 
+                        help='specify which responses you want to make voting screens for, use the number of responses, first response is 0')
+    parser.add_argument("-p","--no_preserve",action='store_false',help='don\'t keep old slides')
     args = parser.parse_args()
     path = args.input
-    its=int(args.iterations)
-    
+    its=args.iterations
+    preserve=args.no_preserve
     submissions = []
-    with open('./twows/{}/responses.csv'.format(path),'r') as csvfile:#read responses
-        reader = csv.reader(csvfile,delimiter=',', quotechar='"')
+    with open('./twows/{}/responses.csv'.format(path),'r',encoding=encoding) as csvfile:#read responses
+        reader = csv.reader(csvfile)
         for row in reader:
             submissions.append(row[1])
             
-    keyorder = random.sample(range(len(keylist)),its)
+    random.shuffle(keylist)
     submissionCount = len(submissions)
     
-    return (path,its,submissions,keyorder,submissionCount)
+    return (path,its,submissions,keylist,submissionCount,args.responses_to_use)
     
-def create_random_order(submissions,its,submissionCount):
+def create_random_order(submissions,its,submissionCount,to_use):
     voteList = []
-    for randomListNumber in range(int(10*its/len(submissions))+1):
-    
-        randomSubmissionOrder = list(range(submissionCount))
-        random.shuffle(randomSubmissionOrder)
-        voteList.append(randomSubmissionOrder)
+    if len(to_use)==0:
+        for i in range(int(10*its/len(submissions))+1):
+            randomSubmissionOrder = list(range(submissionCount))
+            random.shuffle(randomSubmissionOrder)
+            voteList.append(randomSubmissionOrder)
+    elif len(to_use)<10:
+        for i in range(its):
+            randomSubmissionOrder = to_use+random.sample(list(range(submissionCount)),10-len(to_use))
+            random.shuffle(randomSubmissionOrder)
+            voteList.append(randomSubmissionOrder)
+    else:
+        for i in range(int(10*its/len(to_use))+1):
+            randomSubmissionOrder = list(range(len(to_use)))
+            random.shuffle(randomSubmissionOrder)
+            voteList.append(randomSubmissionOrder) 
         
     return voteList
 
-        
-'''def wrap_text(text,width):
-    lines = textwrap.wrap(text,width)
-    new_text='\n'.join(lines)
-    return new_text'''
-    
 def count_words(text):
-    
     return text.strip().count(' ')+1
             
 
-def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions):
+def draw_screens(keylist,path,its,voteList,submissionCount,submissions):
+    global preserve
     screenDict = {}
+    if preserve:
+        try:
+            screenDict = json.load(open('./twows/{}/dict.json'.format(path)))
+        except:
+            screenDict = {}
+    top = len(screenDict)
+    print(screenDict)
+        
     voteNumber = 0
     text_writer = open('./twows/{}/ballots.txt'.format(path),'w')
     for iteration in range(its):
@@ -55,7 +73,12 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
         drawer = ImageDraw.Draw(base)
         existingEntries = []
         
-        word = keylist[keyorder[iteration]].upper()
+        word = keylist[iteration].upper()
+
+        while word in screenDict.keys():
+            keylist.pop(iteration)
+            word = keylist[iteration].upper()
+            
         w = drawer.textsize(word,font)[0]
         drawer.text((1360-int(w/2), 30), word, font=font, fill="black")
         
@@ -88,7 +111,7 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
             voteNumber+=1
             
         screenDict[word]=list(existingEntries)
-        base.save('./twows/{}/voteScreens/{}.png'.format(path,iteration))
+        base.save('./twows/{}/voteScreens/{}.png'.format(path,iteration+top))
         text_writer.write('\n\n\n\n\n')
         
     open('./twows/{}/dict.json'.format(path),'w').write(json.dumps(screenDict))
@@ -96,12 +119,12 @@ def draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
     
 def main():
     keylist = open('./resources/words.txt','r').read().split('\n')
-    path,its,submissions,keyorder,submissionCount = parse_args(keylist)
-    voteList = create_random_order(submissions,its,submissionCount)
+    path,its,submissions,keylist,submissionCount,to_use = parse_args(keylist)
+    voteList = create_random_order(submissions,its,submissionCount,to_use)
 
     os.makedirs('./twows/{}/voteScreens'.format(path), exist_ok=True)
 
-    draw_screens(keylist,path,its,keyorder,voteList,submissionCount,submissions)
+    draw_screens(keylist,path,its,voteList,submissionCount,submissions)
     
     
 if __name__ == '__main__':
