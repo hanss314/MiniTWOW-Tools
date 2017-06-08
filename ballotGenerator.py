@@ -10,25 +10,28 @@ font_path = config['DEFAULT']['font']
 font = ImageFont.truetype(font_path,30)
 
 preserve=True
+use_old = False
 def parse_args(keylist):
     global preserve
+    global use_old
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
     parser.add_argument("-i", "--iterations", nargs='?', type=int, const=20, default=10, help='number of voting screens')
     parser.add_argument("-r", "--responses_to_use", nargs='+', default=[], type=int, 
                         help='specify which responses you want to make voting screens for, use the number of responses, first response is 0')
     parser.add_argument("-p","--no_preserve",action='store_false',help='don\'t keep old slides')
+    parser.add_argument("-f","--use_old",action='store_true',help='Use existing dict.json to make voting slides')
     args = parser.parse_args()
     path = args.input
     its=args.iterations
     preserve=args.no_preserve
+    use_old=args.use_old
     submissions = []
     with open('./twows/{}/responses.csv'.format(path),'r',encoding=encoding) as csvfile:#read responses
         reader = csv.reader(csvfile)
         for row in reader:
             submissions.append(row[1])
-            
-    random.shuffle(keylist)
+
     submissionCount = len(submissions)
     
     return (path,its,submissions,keylist,submissionCount,args.responses_to_use)
@@ -66,7 +69,6 @@ def draw_screens(keylist,path,its,voteList,submissionCount,submissions):
         except:
             screenDict = {}
     top = len(screenDict)
-        
     voteNumber = 0
     text_writer = open('./twows/{}/ballots.txt'.format(path),'w')
     for iteration in range(its):
@@ -89,7 +91,11 @@ def draw_screens(keylist,path,its,voteList,submissionCount,submissions):
         for i in range(10):
             
             #ensures all submissions are displayed
-            submissionNumber = voteList[int(voteNumber/submissionCount)][voteNumber%submissionCount] 
+            submissionNumber=0
+            if use_old:
+                submissionNumber = voteList[iteration][i]
+            else:
+                submissionNumber = voteList[int(voteNumber/submissionCount)][voteNumber%submissionCount] 
             while submissionNumber in existingEntries:
                 voteList[int(voteNumber/submissionCount)].remove(submissionNumber)
                 voteList[int(voteNumber/submissionCount)].append(submissionNumber)
@@ -115,18 +121,30 @@ def draw_screens(keylist,path,its,voteList,submissionCount,submissions):
         screenDict[word]=list(existingEntries)
         base.save('./twows/{}/voteScreens/{}.png'.format(path,iteration+top))
         text_writer.write('\n\n\n\n\n')
-        
-    open('./twows/{}/dict.json'.format(path),'w').write(json.dumps(screenDict))
-    
+     
+    if not use_old:
+        open('./twows/{}/dict.json'.format(path),'w').write(json.dumps(screenDict))
+
     
 def main():
+    global preserve
     keylist = open('./resources/words.txt','r').read().split('\n')
     path,its,submissions,keylist,submissionCount,to_use = parse_args(keylist)
-    voteList = create_random_order(submissions,its,submissionCount,to_use)
-
-    os.makedirs('./twows/{}/voteScreens'.format(path), exist_ok=True)
-
-    draw_screens(keylist,path,its,voteList,submissionCount,submissions)
+    if not use_old:
+        random.shuffle(keylist)
+        voteList = create_random_order(submissions,its,submissionCount,to_use)
+        os.makedirs('./twows/{}/voteScreens'.format(path), exist_ok=True)
+        draw_screens(keylist,path,its,voteList,submissionCount,submissions)
+    else:
+        try:
+            slides = json.load(open('./twows/{}/dict.json'.format(path),'r'))
+        except:
+            pass
+        preserve = False
+        keylist = list(slides.keys())
+        voteList = list(slides.values())
+        os.makedirs('./twows/{}/voteScreens'.format(path), exist_ok=True)
+        draw_screens(keylist,path,len(slides),voteList,submissionCount,submissions)
     
     
 if __name__ == '__main__':
